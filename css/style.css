@@ -143,7 +143,7 @@ a:hover { background: var(--c-sun); }
   background: var(--c-sun);
   border: var(--border);
   box-shadow: var(--shadow-sm);
-  transform: rotate(-2deg);
+  transform: rotate(-3deg);
 }
 .sticker--pink  { background: var(--c-pink); }
 .sticker--paper { background: var(--c-paper); }
