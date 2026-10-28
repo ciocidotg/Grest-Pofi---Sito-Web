@@ -1,0 +1,4 @@
+Qui vanno le foto degli articoli.
+Nomi semplici: minuscole, numeri e trattini (es. apertura-2027.jpg).
+Larghezza massima consigliata: 1600 px.
+Mai bambini riconoscibili senza liberatoria firmata dai genitori.

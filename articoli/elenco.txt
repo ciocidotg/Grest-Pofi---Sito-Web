@@ -1,0 +1,6 @@
+# ELENCO DEGLI ARTICOLI PUBBLICATI
+# Una riga = un articolo. Scrivete il nome del file SENZA ".md".
+# Il più recente va IN CIMA. Le righe che iniziano con # vengono ignorate.
+# Per nascondere un articolo senza cancellarlo, mettete # davanti.
+
+2026-10-benvenuti-sul-sito

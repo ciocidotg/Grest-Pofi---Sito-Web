@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grest Pofi ODV – Estate, comunità e volontariato a Pofi</title>
+  <meta name="description" content="Grest Pofi ODV: associazione di volontariato che da anni organizza il Grest estivo e iniziative per bambini, ragazzi e famiglie a Pofi (FR).">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+
+  <!-- Anteprima quando il link viene condiviso su WhatsApp/Facebook -->
+  <meta property="og:title" content="Grest Pofi ODV">
+  <meta property="og:description" content="Estate, comunità e volontariato a Pofi (FR).">
+  <meta property="og:type" content="website">
+  <!-- DA FARE: aggiungere un'immagine 1200x630 e il dominio definitivo -->
+  <!-- <meta property="og:image" content="https://www.grestpofi.it/img/anteprima.jpg"> -->
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#attivita">Salta al contenuto</a>
+
+  <!-- ===================== MENU ===================== -->
+  <header class="site-header">
+    <nav class="nav container" aria-label="Menu principale">
+      <a href="#home" class="nav__logo">
+        <img src="img/logo.svg" alt="" width="36" height="36">
+        <span>GREST POFI</span>
+      </a>
+
+      <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu">
+        <span class="sr-only">Apri il menu</span>
+        <span class="nav__burger" aria-hidden="true"></span>
+      </button>
+
+      <ul class="nav__menu" id="nav-menu">
+        <li><a href="#attivita">Attività</a></li>
+        <li><a href="#chi-siamo">Chi siamo</a></li>
+        <li><a href="#supportaci">Supportaci</a></li>
+        <li><a href="#contatti">Contatti</a></li>
+        <!-- Quando gli articoli saranno pronti, togliete il commento alla riga sotto -->
+        <!-- <li><a href="articoli.html">Articoli</a></li> -->
+        <li><a href="#supportaci" class="btn btn--primary btn--small">Dona il 5×1000</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ===================== 1. SPLASH ===================== -->
+    <section class="hero" id="home">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <p class="sticker sticker--pink">Ciao, Pofi! 👋</p>
+          <h1 class="hero__title">
+            L'estate<br>
+            <span class="highlight">si fa insieme</span>
+          </h1>
+          <p class="hero__subtitle">
+            Siamo <strong>Grest Pofi ODV</strong>: giovani volontari che da anni fanno vivere
+            l'estate e la comunità ai bambini e ai ragazzi del paese.
+          </p>
+          <div class="hero__actions">
+            <a href="#attivita" class="btn btn--primary">Scopri cosa facciamo</a>
+            <a href="#supportaci" class="btn">Unisciti a noi</a>
+          </div>
+        </div>
+
+        <!-- Riquadro immagine: sostituite il disegno con una foto
+             <img src="img/hero.jpg" alt="Descrizione della foto"> -->
+        <figure class="hero__media box">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Illustrazione: il sole sopra le colline di Pofi">
+            <rect width="400" height="300" fill="var(--c-sky)"/>
+            <circle cx="290" cy="95" r="52" fill="var(--c-sun)" stroke="var(--c-ink)" stroke-width="5"/>
+            <path d="M0 215 Q90 150 180 200 T400 175 V300 H0Z" fill="var(--c-mint)" stroke="var(--c-ink)" stroke-width="5"/>
+            <path d="M0 255 Q120 205 240 245 T400 235 V300 H0Z" fill="var(--c-peach)" stroke="var(--c-ink)" stroke-width="5"/>
+            <g fill="var(--c-paper)" stroke="var(--c-ink)" stroke-width="5">
+              <rect x="70" y="150" width="48" height="52"/>
+              <path d="M64 152 L94 122 L124 152Z"/>
+              <rect x="128" y="130" width="22" height="70"/>
+              <path d="M124 132 L139 108 L154 132Z"/>
+            </g>
+          </svg>
+        </figure>
+      </div>
+
+      <!-- Nastro scorrevole: per cambiare le parole modificate entrambe le liste -->
+      <div class="ribbon" aria-hidden="true">
+        <div class="ribbon__track">
+          <span>Grest estivo ★ Presepe Vivente ★ Carnevale ★ Sport ★ Teatro ★ Volontariato ★</span>
+          <span>Grest estivo ★ Presepe Vivente ★ Carnevale ★ Sport ★ Teatro ★ Volontariato ★</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. LE NOSTRE ATTIVITÀ ===================== -->
+    <section class="section" id="attivita">
+      <div class="container">
+        <header class="section__head">
+          <p class="sticker">Le nostre attività</p>
+          <h2>Non solo estate</h2>
+          <p>Il Grest è il cuore di quello che facciamo, ma durante l'anno animiamo il paese con tante altre iniziative.</p>
+        </header>
+
+        <!-- Per aggiungere un'attività: copiate un blocco <article class="card"> ... </article>
+             Colori dell'icona: icon--sun, icon--pink, icon--sky, icon--mint, icon--peach -->
+        <div class="cards">
+          <article class="card card--featured">
+            <div class="icon icon--sun" aria-hidden="true">☀️</div>
+            <div>
+              <h3>Il Grest estivo</h3>
+              <p>Settimane di giochi, laboratori, gite e feste per bambini e ragazzi, guidati da animatori volontari del paese. Si apre ogni anno con una grande festa per tutte le famiglie.</p>
+              <!-- DA COMPLETARE: età, periodo, orari -->
+              <ul class="tags">
+                <li>📅 Luglio</li>
+                <li>👦 Età da definire</li>
+                <li>📍 Via San Giorgio</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="icon icon--sky" aria-hidden="true">⭐</div>
+            <h3>Presepe Vivente</h3>
+            <p>Un viaggio nella Ciociaria di inizio Novecento tra le botteghe del centro storico, con i mestieri di un tempo.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon icon--pink" aria-hidden="true">🎭</div>
+            <h3>Carnevale dei più piccoli</h3>
+            <p>Festa in maschera con giochi e animazione per bambini e ragazzi, insieme alle realtà del paese.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon icon--mint" aria-hidden="true">🏃</div>
+            <h3>Sport</h3>
+            <p>Giornate sportive in piazza con le associazioni del territorio, per avvicinare i ragazzi allo sport.</p>
+          </article>
+
+          <article class="card">
+            <div class="icon icon--peach" aria-hidden="true">🎬</div>
+            <h3>Teatro e serate</h3>
+            <p>Spettacoli e incontri nei locali del Grest, aperti a tutta la comunità.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 3. CHI SIAMO ===================== -->
+    <section class="section section--sun" id="chi-siamo">
+      <div class="container split">
+        <div>
+          <p class="sticker sticker--paper">Chi siamo</p>
+          <h2>Ragazzi che crescono ragazzi</h2>
+          <p>
+            Grest Pofi è un'organizzazione di volontariato (ODV) nata attorno al Grest parrocchiale,
+            da anni appuntamento fisso dell'estate per le famiglie di Pofi.
+          </p>
+          <p>
+            Siamo soprattutto giovani: molti di noi sono stati bambini del Grest e oggi sono animatori.
+            Crediamo che un paese piccolo diventi grande quando le generazioni si prendono cura l'una dell'altra.
+          </p>
+        </div>
+
+        <!-- DA COMPLETARE: numeri veri -->
+        <div class="stats">
+          <p class="box stat"><strong>15+</strong> <span>Edizioni del Grest</span></p>
+          <p class="box stat"><strong>—</strong> <span>Animatori</span></p>
+          <p class="box stat"><strong>—</strong> <span>Bambini ogni estate</span></p>
+          <p class="box stat"><strong>100%</strong> <span>Volontariato</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 4. SUPPORTACI ===================== -->
+    <section class="section" id="supportaci">
+      <div class="container">
+        <header class="section__head">
+          <p class="sticker sticker--pink">Supportaci</p>
+          <h2>Il Grest esiste grazie a te</h2>
+          <p>Ci sono tanti modi per darci una mano, anche senza spendere nulla.</p>
+        </header>
+
+        <div class="cards cards--3">
+          <article class="card">
+            <div class="icon icon--sun" aria-hidden="true">✍️</div>
+            <h3>Dona il 5×1000</h3>
+            <p>Nella dichiarazione dei redditi firma nel riquadro del Terzo Settore e scrivi il nostro codice fiscale. Non ti costa nulla.</p>
+            <p class="code-box">
+              <span class="sr-only">Codice fiscale:</span>
+              <!-- DA COMPLETARE --> <span id="cf">92024440606
+              </span>
+              <button class="btn btn--small" data-copy="#cf">Copia</button>
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon icon--mint" aria-hidden="true">💛</div>
+            <h3>Fai una donazione</h3>
+            <p>Anche un piccolo contributo aiuta a comprare materiali, coprire le assicurazioni e tenere basse le quote per le famiglie.</p>
+            <p class="code-box">
+              <span class="sr-only">IBAN:</span>
+              <!-- DA COMPLETARE --> <span id="iban">IT00 X000 0000 0000 0000 0000 000</span>
+              <button class="btn btn--small" data-copy="#iban">Copia</button>
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon icon--sky" aria-hidden="true">🙌</div>
+            <h3>Diventa volontario</h3>
+            <p>Hai tempo, idee o una competenza da condividere? Animatori, cuochi, fotografi, artigiani: c'è posto per tutti.</p>
+            <a class="btn btn--primary" href="#contatti">Scrivici</a>
+          </article>
+        </div>
+
+        <!-- Partner e sponsor: in futuro potete mettere i loghi al posto dei nomi -->
+        <div class="partners">
+          <p class="partners__title">Collaborano con noi</p>
+          <ul class="partners__list">
+            <li>Comune di Pofi</li>
+            <li>Parrocchie di Pofi</li>
+            <li>Pro Loco Pofi</li>
+            <li>Pofisportiva</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 5. CONTATTACI ===================== -->
+    <section class="section section--sky" id="contatti">
+      <div class="container">
+        <header class="section__head section__head--center">
+          <h2>Contattaci</h2>
+          <p>Hai una domanda, un'idea o vuoi darci una mano? Siamo qui.</p>
+        </header>
+
+        <div class="split split--top">
+          <ul class="contact-list">
+            <li>
+              <span class="icon icon--small" aria-hidden="true">✉️</span>
+              <div>
+                <span class="contact-list__label">Email</span>
+                <a href="mailto:grestpofi2.0@gmail.com">grestpofi2.0@gmail.com</a>
+              </div>
+            </li>
+            <li>
+              <span class="icon icon--small" aria-hidden="true">📍</span>
+              <div>
+                <span class="contact-list__label">Sede</span>
+                <!-- Link a Google Maps invece della mappa incorporata: niente cookie, niente banner -->
+                <a href="https://www.google.com/maps/search/?api=1&query=Via+San+Giorgio+03026+Pofi+FR" target="_blank" rel="noopener">
+                  Via San Giorgio, 03026 Pofi (FR)
+                </a>
+              </div>
+            </li>
+            <li>
+              <span class="icon icon--small" aria-hidden="true">📱</span>
+              <div>
+                <span class="contact-list__label">Social</span>
+                <a href="https://www.facebook.com/GrestPofiPagina" target="_blank" rel="noopener">Facebook</a>
+                ·
+                <!-- DA VERIFICARE: indirizzo esatto del profilo Instagram -->
+                <a href="https://www.instagram.com/grestpofi" target="_blank" rel="noopener">Instagram</a>
+              </div>
+            </li>
+          </ul>
+
+          <div class="card faq">
+            <h3>Domande frequenti</h3>
+            <details>
+              <summary>Quando aprono le iscrizioni al Grest?</summary>
+              <p>Di solito tra maggio e giugno. Pubblicheremo date e modalità qui sul sito.</p>
+            </details>
+            <details>
+              <summary>Posso fare l'animatore?</summary>
+              <p>Sì! Scrivici una email: ti spieghiamo età minima e percorso di formazione.</p>
+            </details>
+            <details>
+              <summary>Come posso aiutare l'associazione?</summary>
+              <p>Con il 5×1000, una donazione o il tuo tempo: trovi tutto nella sezione <a href="#supportaci">Supportaci</a>.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p class="site-footer__brand">☀️ GREST POFI ODV</p>
+      <p>
+        Via San Giorgio, 03026 Pofi (FR)<br>
+        <!-- DA COMPLETARE --> C.F. 00000000000 · Iscritta al RUNTS
+      </p>
+      <p>
+        <a href="privacy.html">Privacy</a> ·
+        <a href="#home">Torna su ↑</a>
+      </p>
+      <p class="site-footer__copy">© <span data-year></span> Grest Pofi ODV</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
