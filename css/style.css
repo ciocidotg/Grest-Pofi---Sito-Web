@@ -31,10 +31,21 @@
   --c-mint:  #6fdcb4;
   --c-peach: #ffb38a;
   --c-muted: #4a4a4a;   /* testo secondario */
+  
+  /*Colori armonia circolare*/
+  --AC-giallo: #fcca59;
+  --AC-arancione: #f5793b;
+  --AC-verde: #267f53;
+  --AC-azzurro: #9fb6f0;
+  --AC-rosa: #e49bbc;
+  --AC-sfondoBianco: #f9f2e2;
+
 
   /* Font (vedi sezione 2) */
   --font-body:    "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-heading: "Space Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-primario: "Instrument Serif Latin";
+  --font-secondario: "Cal Sans Latin";
 
   /* Il "tratto" brutalista */
   --border:    3px solid var(--c-ink);
@@ -59,18 +70,33 @@
    Mettete i file .woff2 nella cartella /fonts con questi nomi
    (istruzioni nel LEGGIMI). Finché non ci sono, il sito usa
    automaticamente i font di sistema. */
-@font-face {
+@font-face { /*Claude */
   font-family: "Space Grotesk";
   src: url("../fonts/space-grotesk-latin-variable.woff2") format("woff2");
   font-weight: 300 700;
   font-display: swap;
 }
-@font-face {
+@font-face { /*Claude */
   font-family: "Space Mono";
   src: url("../fonts/space-mono-latin-700-normal.woff2") format("woff2");
   font-weight: 700;
   font-display: swap;
 }
+@font-face{ /*Font primario*/
+font-family: "Instrument Serif Latin";
+src: url("../fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
+font-weight: 300 700;
+font-display: swap;
+
+}
+@font-face{ /*Font secondario*/
+font-family: "Cal Sans Latin";
+src: url("../fonts/cal-sans-latin-400-normal.woff2") format("woff2");
+font-weight: 600;
+font-display: swap;
+
+}
+
 
 
 /* ---------- 3. BASE ---------- */
@@ -80,7 +106,7 @@ html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 8px);
 
 body {
   margin: 0;
-  font-family: var(--font-body);
+  font-family: var(--font-secondario);
   font-size: 1.0625rem;
   line-height: 1.6;
   color: var(--c-ink);
@@ -88,14 +114,14 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: var(--font-heading);
-  font-weight: 700;
+  font-family: var(--font-primario);
+  font-weight: 1000;
   line-height: 1.05;
   letter-spacing: -.02em;
   margin: 0 0 var(--space-s);
 }
 h2 { font-size: clamp(2rem, 5vw, 3.2rem); }
-h3 { font-size: 1.2rem; text-transform: uppercase; }
+h3 { font-size: 2.0rem; text-transform: uppercase; }
 p  { margin: 0 0 var(--space-s); }
 
 img, svg { max-width: 100%; height: auto; display: block; }
@@ -320,8 +346,9 @@ a:hover { background: var(--c-sun); }
 .code-box {
   display: flex; align-items: center; justify-content: space-between; gap: .5rem;
   width: 100%;
-  font-family: var(--font-heading); font-size: .9rem;
-  background: var(--c-bg); border: 2px dashed var(--c-ink);
+  font-family: var(--font-secondario); font-size: .9rem;
+  
+  background: var(--c-bg); border: 2px solid var(--c-ink);
   padding: .5rem .6rem;
   word-break: break-all;
   margin-top: auto;
