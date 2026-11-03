@@ -1,1 +1,1 @@
-Mettete qui i file dei font (vedi LEGGIMI.md, sezione Font).
+Qui vanno i file dei font (vedi LEGGIMI.md, sezione Font).

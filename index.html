@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grest Pofi ODV – Estate, comunità e volontariato a Pofi</title> 
+  <title>Grest Pofi - ODV | Associazione Giovanile</title>
   <meta name="description" content="Grest Pofi ODV: associazione di volontariato che da anni organizza il Grest estivo e iniziative per bambini, ragazzi e famiglie a Pofi (FR).">
-  <link rel="icon" href="img/SOLESPILLA.png" type="image/svg+xml">
+  <link rel="icon" href="img/SOLESPILLA.png" type="image/png">
 
   <!-- Anteprima quando il link viene condiviso su WhatsApp/Facebook -->
   <meta property="og:title" content="Grest Pofi ODV">
@@ -21,7 +21,7 @@
 
 
 <body>
-  
+
   <a class="skip-link" href="#attivita">Salta al contenuto</a>
 
   <!-- ===================== MENU ===================== -->
@@ -42,8 +42,8 @@
         <li><a href="#chi-siamo">Chi siamo</a></li>
         <li><a href="#supportaci">Supportaci</a></li>
         <li><a href="#contatti">Contatti</a></li>
-        <!-- Quando gli articoli saranno pronti, togliete il commento alla riga sotto -->
-        <!-- <li><a href="articoli.html">Articoli</a></li> -->
+        <li><a href="articoli.html">Articoli</a></li>
+        <li><a href="articoli.html">Extra</a></li>
         <li><a href="#supportaci" class="btn btn--primary btn--small">Dona il 5×1000</a></li>
       </ul>
     </nav>
@@ -55,9 +55,9 @@
     <section class="hero" id="home">
       <div class="container hero__inner">
         <div class="hero__text">
-          <p class="sticker sticker--pink">Ciao, Pofi! 👋</p>
+          <p class="sticker sticker--rosa">Ciao, Pofi! 👋</p>
           <h1 class="hero__title">
-            Droga, pistole<br>
+aaaa aaa<br>
             <span class="highlight">faccio il panico</span>
           </h1>
           <p class="hero__subtitle">
@@ -71,14 +71,16 @@
         </div>
 
         <!-- Riquadro immagine: sostituite il disegno con una foto
-             <img src="img/hero.jpg" alt="Descrizione della foto"> -->
+             <img src="img/hero.jpg" alt="Descrizione della foto">
+             I colori del disegno sono scritti qui dentro e non seguono la palette:
+             è solo un segnaposto. -->
         <figure class="hero__media box">
           <svg viewBox="0 0 400 300" role="img" aria-label="Illustrazione: il sole sopra le colline di Pofi">
-            <rect width="400" height="300" fill="var(--c-sky)"/>
-            <circle cx="290" cy="95" r="52" fill="var(--c-sun)" stroke="var(--c-ink)" stroke-width="5"/>
-            <path d="M0 215 Q90 150 180 200 T400 175 V300 H0Z" fill="var(--c-mint)" stroke="var(--c-ink)" stroke-width="5"/>
-            <path d="M0 255 Q120 205 240 245 T400 235 V300 H0Z" fill="var(--c-peach)" stroke="var(--c-ink)" stroke-width="5"/>
-            <g fill="var(--c-paper)" stroke="var(--c-ink)" stroke-width="5">
+            <rect width="400" height="300" fill="#36b6f2"/>
+            <circle cx="290" cy="95" r="52" fill="#ffd23f" stroke="#111111" stroke-width="5"/>
+            <path d="M0 215 Q90 150 180 200 T400 175 V300 H0Z" fill="#6fdcb4" stroke="#111111" stroke-width="5"/>
+            <path d="M0 255 Q120 205 240 245 T400 235 V300 H0Z" fill="#ffb38a" stroke="#111111" stroke-width="5"/>
+            <g fill="#ffffff" stroke="#111111" stroke-width="5">
               <rect x="70" y="150" width="48" height="52"/>
               <path d="M64 152 L94 122 L124 152Z"/>
               <rect x="128" y="130" width="22" height="70"/>
@@ -98,6 +100,11 @@
     </section>
 
     <!-- ===================== 2. LE NOSTRE ATTIVITÀ ===================== -->
+    <!-- La sezione è divisa in tre blocchi (class="blocco"):
+         A. Grest campo estivo  → box grande a tutta larghezza
+         B. Progetti            → riquadro colorato con box minori e banner
+         C. Altre attività      → box minori
+         Colori dell'icona: icon--giallo, icon--arancione, icon--verde, icon--azzurro, icon--rosa -->
     <section class="section" id="attivita">
       <div class="container">
         <header class="section__head">
@@ -106,14 +113,14 @@
           <p>Il Grest è il cuore di quello che facciamo, ma durante l'anno animiamo il paese con tante altre iniziative.</p>
         </header>
 
-        <!-- Per aggiungere un'attività: copiate un blocco <article class="card"> ... </article>
-             Colori dell'icona: icon--sun, icon--pink, icon--sky, icon--mint, icon--peach -->
-        <div class="cards">
+        <!-- ---------- A. GREST CAMPO ESTIVO ---------- -->
+        <div class="blocco">
           <article class="card card--featured">
-            <div class="icon icon--sun" aria-hidden="true">☀️</div>
+            <div class="icon icon--giallo" aria-hidden="true">☀️</div>
             <div>
-              <h3>Progetto: Armonia Circolare</h3>
-              <p>Larpare su cose che facciamo </p>
+              <h2>Grest campo estivo</h2>
+              <!-- DA COMPLETARE: descrizione -->
+              <p>Il campo estivo per bambini e ragazzi di Pofi: giochi, laboratori, gite e amicizia, insieme agli animatori.</p>
               <!-- DA COMPLETARE: età, periodo, orari -->
               <ul class="tags">
                 <li>📅 Luglio</li>
@@ -122,47 +129,107 @@
               </ul>
             </div>
           </article>
+        </div>
 
-          <article class="card">
-            <div class="icon icon--sky" aria-hidden="true">🏫</div>
-            <h3>Il Doposcuola</h3>
-            <p>Un'attività di accompagnamento e supporto ai ragazzi dopo la scuola, con attività didattiche e ludiche.</p>
-          </article>
+        <!-- ---------- B. PROGETTO ARMONIA CIRCOLARE ---------- -->
+        <!-- Dentro "griglia-3" potete mettere, nell'ordine che volete:
+             - box minori: <article class="card"> ... </article>
+             - banner lunghi 3 colonne: <div class="banner banner--3"> ... </div>
+             - banner da 1 colonna:     <div class="banner banner--1"> ... </div>
+             Per un altro progetto: copiate tutto il <div class="blocco progetto"> ... </div> -->
+        <div class="blocco progetto">
+          <div class="progetto__head">
+            <div class="icon icon--giallo" aria-hidden="true">🎶</div>
+            <div>
+              <h3>Progetto: Armonia Circolare</h3>
+              <p>Larpare su cose che facciamo </p>
+            </div>
+          </div>
 
-          <article class="card">
-            <div class="icon icon--pink" aria-hidden="true">☮️</div>
-            <h3>La Marcia della pace</h3>
-            <p>Droga pistole, faccio il panico. Vado a mignotte in monopattino</p>
-          </article>
-
-          <article class="card">
-            <div class="icon icon--mint" aria-hidden="true">🍁</div>
-            <h3>La festa d'autunno</h3>
-            <p>Non dichiaramo le tasse e ci pagano pure</p>
-          </article>
-
-          <article class="card">
-            <div class="icon icon--peach" aria-hidden="true">🎬</div>
-            <h3>Cine apparizioi</h3>
-            <p>Già mai</p>
-          </article>
+          <div class="griglia-3">
+            <!-- Banner lungo con il logo della Regione.
+                 DA COMPLETARE: mettete il file in img/ e sostituite il riquadro tratteggiato con:
+                 <img src="img/logo-regione.png" alt="Regione Lazio"> -->
+            <div class="banner banner--3">
+              <span class="banner--3"><img src="img/LogoReuppublica.png" alt="Regione Lazio"> </span>
+              <span class="banner--3"><img src="img/LOGO_POSITIVO_COLORE TRASPARENZA.png" alt="Regione Lazio"> </span>
+              <span class="banner--3"><img src="img/LOGO_POSITIVO_COLORE TRASPARENZA.png" alt="Regione Lazio"> </span>
+              
+            </div>
 
             <article class="card">
-            <div class="icon icon--peach" aria-hidden="true">🎬</div>
-            <h3>Il porco di Zio</h3>
-            <p>Spettacoli e incontri nei locali del Grest, aperti a tutta la comunità.</p>
-          </article>
+              <div class="icon icon--azzurro" aria-hidden="true">🏫</div>
+              <h3>Il Doposcuola</h3>
+              <p>Un'attività di accompagnamento e supporto ai ragazzi dopo la scuola, con attività didattiche e ludiche.</p>
+            </article>
 
+            <article class="card">
+              <div class="icon icon--arancione" aria-hidden="true">🎟️</div>
+              <h3>Cinesosta</h3>
+              <p>Un cinema di merda, all'aperto con le machine. Non si vede un cazzo, non si sente un cazzo. È imbrazzante come cosa</p>
+            </article>
 
+  
+            <article class="card">
+              <div class="icon icon--verde" aria-hidden="true">🌱</div>
+              <h3>L'Orto circolare</h3>
+              <p>Descrizione dell'attività.</p>
+            </article>
+            
+            <article class="card">
+              <div class="icon icon--verde" aria-hidden="true">🌲</div>
+              <h3>Imponta verde</h3>
+              <p>Descrizione dell'attività, non ce la faccio, non ce la faccio, non ce la faccio, non ce la faccio</p>
+            </article>
+
+            <article class="card">
+              <div class="icon icon--azzurro" aria-hidden="true">📖</div>
+              <h3>Sala Studio</h3>
+              <p>Lorem ipsum loret est fareic juanala calos tripa roh calash</p>
+            </article>
+
+             <article class="card">
+              <div class="icon icon--rosa" aria-hidden="true">🎉</div>
+              <h3>Serate Giovani</h3>
+              <p>Lorem ipsum loret est fareic juanala calos tripa roh calash</p>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- ---------- C. ALTRE ATTIVITÀ ---------- -->
+        <!-- Per aggiungere un'attività: copiate un blocco <article class="card"> ... </article> -->
+        <div class="blocco">
+          
+          <div class="cards">
+            <article class="card">
+              <div class="icon icon--rosa" aria-hidden="true">☮️</div>
+              <h3>La Marcia della pace</h3>
+              <p>P' cinq euro lo metto in culo a Loredana Bertè, ch'estè!<br> Farà molto caldo ancora non è estate. Ieri mi hanno arrestato 
+              oggi lo racconto in studio.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon icon--verde" aria-hidden="true">🍁</div>
+              <h3>La festa d'autunno</h3>
+              <p>Non dichiaramo le tasse e ci pagano pure</p>
+            </article>
+
+            <article class="card">
+              <div class="icon icon--arancione" aria-hidden="true">🌸</div>
+              <h3>Infiorata</h3>
+              <p>Non posso credere che la facciamo ancora.</p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ===================== 3. CHI SIAMO ===================== -->
-    <section class="section section--sun" id="chi-siamo">
+    <section class="section section--giallo" id="chi-siamo">
       <div class="container split">
         <div>
-          <p class="sticker sticker--paper">Chi siamo</p>
+          <p class="sticker sticker--verde">Chi siamo</p>
           <h2>Ragazzi che crescono ragazzi</h2>
           <p>
             Grest Pofi è un'organizzazione di volontariato (ODV) nata attorno al Grest parrocchiale,
@@ -188,40 +255,39 @@
     <section class="section" id="supportaci">
       <div class="container">
         <header class="section__head">
-          <p class="sticker sticker--pink">Supportaci</p>
+          <p class="sticker sticker--rosa">Supportaci</p>
           <h2>Il Grest esiste grazie a te</h2>
           <p>Ci sono tanti modi per darci una mano, anche senza spendere nulla.</p>
         </header>
 
         <div class="cards cards--3">
           <article class="card">
-            <div class="icon icon--sun" aria-hidden="true">✍️</div>
+            <div class="icon icon--giallo" aria-hidden="true">✍️</div>
             <h3>Dona il 5×1000</h3>
             <p>Nella dichiarazione dei redditi firma nel riquadro del Terzo Settore e scrivi il nostro codice fiscale. Non ti costa nulla.</p>
             <p class="code-box">
               <span class="sr-only">Codice fiscale:</span>
-              <!-- DA COMPLETARE --> <span id="cf">92094440606
-              </span>
+              <span id="cf">92094440606</span>
               <button class="btn btn--small" data-copy="#cf">Copia</button>
             </p>
           </article>
 
           <article class="card">
-            <div class="icon icon--mint" aria-hidden="true">💛</div>
+            <div class="icon icon--verde" aria-hidden="true">💛</div>
             <h3>Fai una donazione</h3>
             <p>Anche un piccolo contributo aiuta a comprare materiali, coprire le assicurazioni e tenere basse le quote per le famiglie.</p>
             <p class="code-box">
               <span class="sr-only">IBAN:</span>
-              <!-- DA COMPLETARE --> <span id="iban">IT00 X000 0000 0000 0000 0000 000</span>
+              <!-- DA COMPLETARE --> <span id="iban">IT88 V083 2714 8000 0000 0006 079</span>
               <button class="btn btn--small" data-copy="#iban">Copia</button>
             </p>
           </article>
 
           <article class="card">
-            <div class="icon icon--sky" aria-hidden="true">🙌</div>
+            <div class="icon icon--azzurro" aria-hidden="true">🙌</div>
             <h3>Diventa volontario</h3>
             <p>Hai tempo, idee o una competenza da condividere? Animatori, cuochi, fotografi, artigiani: c'è posto per tutti.</p>
-            <a class="btn btn--primary" href="#contatti">Scrivici</a>
+            <a class="btn btn--primary" href="#contatti"><strong>Scrivici</strong></a>
           </article>
         </div>
 
@@ -230,16 +296,16 @@
           <p class="partners__title">Collaborano con noi</p>
           <ul class="partners__list">
             <li>Comune di Pofi</li>
-            <li>Parrocchie di Pofi</li>
+            <li>Parrocchie di S. Maria Maggiore e S. Rocco</li>
             <li>Pro Loco Pofi</li>
-            <li>Pofisportiva</li>
+            <li>Il mondo dei numeri primi</li>
           </ul>
         </div>
       </div>
     </section>
 
     <!-- ===================== 5. CONTATTACI ===================== -->
-    <section class="section section--sky" id="contatti">
+    <section class="section section--azzurro" id="contatti">
       <div class="container">
         <header class="section__head section__head--center">
           <h2>Contattaci</h2>
@@ -303,9 +369,10 @@
     <div class="container site-footer__inner">
       <p class="site-footer__brand">☀️ GREST POFI ODV</p>
       <p>
-        Via San Giorgio, 03026 Pofi (FR)<br>
+        Via Eugenio Giovannini snc, 03026 Pofi (FR)<br>
         C.F. 92094440606 · Iscritta al RUNTS<br>
-        A cura di Antonello | Simone | Aurora
+        A cura di Antonello | Simone | Aurora<br>
+        Versione 0.1
       </p>
       <p>
         <a href="privacy.html">Privacy</a> ·

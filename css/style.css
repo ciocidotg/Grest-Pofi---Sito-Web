@@ -2,7 +2,7 @@
    GREST POFI ODV – Foglio di stile
    ---------------------------------------------------------
    Stile: "neo-brutalista" – bordi neri spessi, ombre piene
-   sfalsate, angoli vivi, colori accesi da estate.
+   sfalsate, angoli vivi, colori della palette "Armonia Circolare".
 
    PER IL DESIGNER: quasi tutto si cambia dalle VARIABILI
    della sezione 1 (colori, font, bordi, ombre, spazi).
@@ -21,31 +21,24 @@
 
 /* ---------- 1. VARIABILI ---------- */
 :root {
-  /* Palette */
-  --c-ink:   #111111;   /* nero "inchiostro": testi, bordi, ombre */
-  --c-paper: #ffffff;   /* card */
-  --c-bg:    #fff8e1;   /* sfondo crema */
-  --c-sun:   #ffd23f;   /* giallo sole – colore guida del Grest */
-  --c-pink:  #ff6fa8;
-  --c-sky:   #36b6f2;
-  --c-mint:  #6fdcb4;
-  --c-peach: #ffb38a;
-  --c-muted: #4a4a4a;   /* testo secondario */
-  
-  /*Colori armonia circolare*/
-  --AC-giallo: #fcca59;
-  --AC-arancione: #f5793b;
-  --AC-verde: #267f53;
-  --AC-azzurro: #9fb6f0;
-  --AC-rosa: #e49bbc;
+  /* Palette "Armonia Circolare" */
+  --AC-giallo:       #fcca59;   /* colore guida: pulsanti, evidenziatore, sezione "Chi siamo" */
+  --AC-arancione:    #f5793b;
+  --AC-verde:        #267f53;   /* scuro: usatelo per sfondi piccoli (icone), non sotto testi lunghi */
+  --AC-azzurro:      #9fb6f0;
+  --AC-rosa:         #e49bbc;
   --AC-sfondoBianco: #f9f2e2;
 
+  /* Colori di servizio */
+  --c-ink:   #111111;               /* nero "inchiostro": testi, bordi, ombre */
+  --c-paper: #ffffff;               /* sfondo delle card */
+  --c-bg:    var(--AC-sfondoBianco);/* sfondo della pagina */
+  --c-muted: #4a4a4a;               /* testo secondario (descrizioni) */
 
-  /* Font (vedi sezione 2) */
-  --font-body:    "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-heading: "Space Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --font-primario: "Instrument Serif Latin";
-  --font-secondario: "Cal Sans Latin";
+  /* Font (vedi sezione 2). Dopo il nome del nostro font ci sono
+     dei font "di riserva", usati se il file non si carica. */
+  --font-secondario:   "Instrument Serif", Georgia, "Times New Roman", serif;   /* titoli */
+  --font-primario: "Cal Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* testi */
 
   /* Il "tratto" brutalista */
   --border:    3px solid var(--c-ink);
@@ -56,7 +49,7 @@
 
   /* Misure */
   --container: 1160px;
-  --gutter:    1rem;
+  --gutter:    .5rem;   /* 16px: margine laterale e distanza tra i box su telefono */
   --space-s:   .75rem;
   --space-m:   1.5rem;
   --space-l:   3rem;
@@ -64,39 +57,39 @@
   --header-h:  72px;
 }
 
+/* Griglia da 1 cm: da desktop in su margini laterali e distanze
+   tra i box diventano di 40px (circa 1 cm sullo schermo).
+   Tutti i box usano --gutter, quindi restano allineati tra loro. */
+@media (min-width: 1024px) {
+  :root { --gutter: 20px; }
+}
+
 
 /* ---------- 2. FONT ----------
-   Space Grotesk (testi) e Space Mono (titoli) sono gratuiti.
-   Mettete i file .woff2 nella cartella /fonts con questi nomi
-   (istruzioni nel LEGGIMI). Finché non ci sono, il sito usa
-   automaticamente i font di sistema. */
-@font-face { /*Claude */
-  font-family: "Space Grotesk";
-  src: url("../fonts/space-grotesk-latin-variable.woff2") format("woff2");
-  font-weight: 300 700;
+   Ogni @font-face "presenta" al browser un file di font:
+   - font-family  → il nome con cui lo richiamiamo nelle variabili
+   - src          → dove si trova il file (partendo da questa cartella css/)
+   - font-weight  → che spessore contiene il file (400 = normale, 700 = grassetto).
+                    I nostri due file contengono solo il 400: per questo nel resto
+                    del CSS i pesi sono tutti 400. Se chiedessimo 700, il browser
+                    "ingrasserebbe" le lettere da solo e verrebbero sbavate.
+   - font-style   → normale o corsivo
+   - font-display: swap → mentre il font si scarica, il testo si vede subito
+                    con un font di sistema, poi viene sostituito. */
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
-@font-face { /*Claude */
-  font-family: "Space Mono";
-  src: url("../fonts/space-mono-latin-700-normal.woff2") format("woff2");
-  font-weight: 700;
+@font-face {
+  font-family: "Cal Sans";
+  src: url("../fonts/cal-sans-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
   font-display: swap;
 }
-@font-face{ /*Font primario*/
-font-family: "Instrument Serif Latin";
-src: url("../fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
-font-weight: 300 700;
-font-display: swap;
-
-}
-@font-face{ /*Font secondario*/
-font-family: "Cal Sans Latin";
-src: url("../fonts/cal-sans-latin-400-normal.woff2") format("woff2");
-font-weight: 600;
-font-display: swap;
-
-}
-
 
 
 /* ---------- 3. BASE ---------- */
@@ -107,29 +100,33 @@ html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 8px);
 body {
   margin: 0;
   font-family: var(--font-secondario);
-  font-size: 1.0625rem;
-  line-height: 1.6;
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  word-spacing: .06em;   /* Cal Sans è molto stretto: un po' di spazio tra le parole aiuta a leggere */
   color: var(--c-ink);
   background: var(--c-bg);
 }
 
+/* Titoli: Instrument Serif è un font sottile ed elegante,
+   quindi lo usiamo grande invece che in grassetto. */
 h1, h2, h3 {
   font-family: var(--font-primario);
-  font-weight: 1000;
-  line-height: 1.05;
-  letter-spacing: -.02em;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.01em;
   margin: 0 0 var(--space-s);
 }
-h2 { font-size: clamp(2rem, 5vw, 3.2rem); }
-h3 { font-size: 2.0rem; text-transform: uppercase; }
+h2 { font-size: clamp(2.5rem, 6vw, 4rem); }
+h3 { font-size: 1.9rem; }
 p  { margin: 0 0 var(--space-s); }
 
 img, svg { max-width: 100%; height: auto; display: block; }
 
 a { color: var(--c-ink); text-decoration-thickness: 2px; text-underline-offset: 3px; }
-a:hover { background: var(--c-sun); }
+a:hover { background: var(--AC-giallo); }
 
-:focus-visible { outline: 3px solid var(--c-pink); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--AC-verde); outline-offset: 3px; }
 
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
 
@@ -139,7 +136,7 @@ a:hover { background: var(--c-sun); }
 }
 
 .skip-link { position: absolute; left: -999px; top: 0; }
-.skip-link:focus { left: var(--gutter); top: var(--gutter); z-index: 100; background: var(--c-sun); padding: .5rem 1rem; border: var(--border); }
+.skip-link:focus { left: var(--gutter); top: var(--gutter); z-index: 100; background: var(--AC-giallo); padding: .5rem 1rem; border: var(--border); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -162,20 +159,20 @@ a:hover { background: var(--c-sun); }
   display: inline-block;
   margin-bottom: var(--space-m);
   padding: .3rem .9rem;
-  font-family: var(--font-heading);
+  font-family: var(--font-secondario);
   font-size: .85rem;
   text-transform: uppercase;
-  letter-spacing: .05em;
-  background: var(--c-sun);
+  letter-spacing: .06em;
+  background: var(--AC-azzurro);
   border: var(--border);
   box-shadow: var(--shadow-sm);
   transform: rotate(-3deg);
 }
-.sticker--pink  { background: var(--c-pink); }
-.sticker--paper { background: var(--c-paper); }
+.sticker--rosa  { background: var(--AC-rosa); }
+.sticker--verde { background: var(--AC-verde); }
 
 /* Evidenziatore dietro una parola */
-.highlight { background: var(--c-sun); padding-inline: .2em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.highlight { background: var(--AC-giallo); padding-inline: .2em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 
 /* Quadratino colorato con icona */
 .icon {
@@ -186,19 +183,19 @@ a:hover { background: var(--c-sun); }
   border: var(--border);
   margin-bottom: var(--space-s);
 }
-.icon--small { width: 46px; height: 46px; font-size: 1.2rem; margin: 0; }
-.icon--sun   { background: var(--c-sun); }
-.icon--pink  { background: var(--c-pink); }
-.icon--sky   { background: var(--c-sky); }
-.icon--mint  { background: var(--c-mint); }
-.icon--peach { background: var(--c-peach); }
+.icon--small     { width: 46px; height: 46px; font-size: 1.2rem; margin: 0; }
+.icon--giallo    { background: var(--AC-giallo); }
+.icon--arancione { background: var(--AC-arancione); }
+.icon--verde     { background: var(--AC-verde); }
+.icon--azzurro   { background: var(--AC-azzurro); }
+.icon--rosa      { background: var(--AC-rosa); }
 
 /* Pulsanti */
 .btn {
   display: inline-block;
   padding: .8rem 1.4rem;
-  font: inherit; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .03em;
+  font: inherit; font-weight: 400;
+  text-transform: uppercase; letter-spacing: .04em;
   color: var(--c-ink); text-decoration: none;
   background: var(--c-paper);
   border: var(--border);
@@ -209,12 +206,12 @@ a:hover { background: var(--c-sun); }
 }
 .btn:hover  { background: var(--c-paper); transform: translate(-2px, -2px); box-shadow: var(--shadow); }
 .btn:active { transform: translate(3px, 3px); box-shadow: none; }
-.btn--primary, .btn--primary:hover { background: var(--c-sun); }
+.btn--primary, .btn--primary:hover { background: var(--AC-giallo); }
 .btn--small { padding: .35rem .8rem; font-size: .8rem; }
 
 /* Etichette piccole (es. data, età, luogo) */
 .tags { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: var(--space-s) 0 0; }
-.tags li { padding: .2rem .7rem; font-weight: 600; font-size: .9rem; background: var(--c-paper); border: 2px solid var(--c-ink); }
+.tags li { padding: .2rem .7rem; font-size: .9rem; background: var(--c-paper); border: 2px solid var(--c-ink); }
 
 
 /* ---------- 5. MENU ---------- */
@@ -228,7 +225,7 @@ a:hover { background: var(--c-sun); }
 
 .nav__logo {
   display: flex; align-items: center; gap: .6rem;
-  font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; letter-spacing: -.03em;
+  font-family: var(--font-secondario); font-size: 1.3rem; letter-spacing: -.01em;
   text-decoration: none;
 }
 .nav__logo:hover { background: none; }
@@ -236,12 +233,12 @@ a:hover { background: var(--c-sun); }
 .nav__menu { display: flex; align-items: center; gap: .25rem; list-style: none; margin: 0; padding: 0; }
 .nav__menu a:not(.btn) {
   display: block; padding: .35rem .75rem;
-  font-weight: 700; font-size: .9rem; text-transform: uppercase;
+  font-size: .9rem; text-transform: uppercase; letter-spacing: .04em;
   text-decoration: none;
 }
 .nav__menu li:last-child { margin-left: .75rem; }
 
-.nav__toggle { display: none; background: var(--c-sun); border: var(--border); padding: .6rem .5rem; cursor: pointer; }
+.nav__toggle { display: none; background: var(--AC-giallo); border: var(--border); padding: .6rem .5rem; cursor: pointer; }
 .nav__burger, .nav__burger::before, .nav__burger::after {
   display: block; width: 22px; height: 3px; background: var(--c-ink); position: relative;
 }
@@ -267,22 +264,23 @@ a:hover { background: var(--c-sun); }
 
 /* ---------- 6. SEZIONI ---------- */
 .section { padding-block: var(--space-xl); border-bottom: var(--border); }
-.section--sun { background: var(--c-sun); }
-.section--sky { background: var(--c-sky); }
+.section--giallo  { background: var(--AC-giallo); }
+.section--azzurro { background: var(--AC-azzurro); }
 
 .section__head { max-width: 660px; margin-bottom: var(--space-l); }
 .section__head p:last-child { font-size: 1.15rem; color: var(--c-muted); }
 .section__head--center { margin-inline: auto; text-align: center; }
-.section--sky .section__head p:last-child { color: var(--c-ink); }
+.section--azzurro .section__head p:last-child { color: var(--c-ink); }
 
 /* Splash / hero */
 .hero { border-bottom: var(--border); overflow: hidden; }
 .hero__inner {
-  display: grid; gap: var(--space-l); align-items: center;
+  display: grid; gap: calc(var(--gutter) * 2); align-items: center;
   grid-template-columns: 1.1fr 1fr;
   padding-block: var(--space-xl);
 }
-.hero__title { font-size: clamp(2.6rem, 7vw, 4.8rem); }
+/* line-height un po' più alto: così l'evidenziatore non copre le lettere della riga sopra */
+.hero__title { font-size: clamp(3rem, 8vw, 5.6rem); line-height: 1.12; margin-bottom: var(--space-m); }
 .hero__subtitle { max-width: 34rem; font-size: 1.2rem; color: var(--c-muted); }
 .hero__subtitle strong { color: var(--c-ink); }
 .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-m); }
@@ -297,8 +295,8 @@ a:hover { background: var(--c-sun); }
 /* Nastro scorrevole */
 .ribbon {
   overflow: hidden;
-  background: var(--c-ink); color: var(--c-sun);
-  font-family: var(--font-heading); font-size: 1.1rem; text-transform: uppercase;
+  background: var(--c-ink); color: var(--AC-giallo);
+  font-family: var(--font-secondario); font-size: 1.1rem; text-transform: uppercase; letter-spacing: .04em;
   padding-block: .8rem;
 }
 .ribbon__track { display: flex; width: max-content; animation: scorri 30s linear infinite; }
@@ -306,7 +304,7 @@ a:hover { background: var(--c-sun); }
 @keyframes scorri { to { transform: translateX(-50%); } }
 
 /* Card */
-.cards { display: grid; gap: var(--space-m); grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.cards { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 .cards--3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
 .card {
@@ -319,93 +317,132 @@ a:hover { background: var(--c-sun); }
   transition: transform .15s, box-shadow .15s;
 }
 .card:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
-.card p:last-of-type { color: var(--c-muted); }
+.card p { color: var(--c-muted); }
 .card .btn { margin-top: auto; }
-
+.blocco:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
+/* Card grande a tutta larghezza (es. Grest campo estivo) */
 .card--featured {
   grid-column: 1 / -1;
   flex-direction: row; gap: var(--space-m);
-  background: var(--c-bg);
+  background: var(--AC-giallo);
 }
-.card--featured h3 { font-size: 1.6rem; }
+.card--featured h3 { font-size: 2.4rem; }
 @media (max-width: 600px) { .card--featured { flex-direction: column; } }
 
+/* Blocchi della sezione Attività: ogni blocco è separato dal precedente */
+.blocco + .blocco { margin-top: calc(var(--gutter) * 2); }
+.blocco__titolo { font-size: 2.4rem; margin-bottom: var(--gutter); }
+
+/* Progetto (es. Armonia Circolare): un riquadro colorato che contiene
+   l'intestazione del progetto e, sotto, i suoi box minori e i banner. */
+.progetto {
+  padding: var(--gutter);
+  background: var(--AC-rosa);   /* cambiate qui il colore del riquadro */
+  border: var(--border);
+  box-shadow: var(--shadow);
+}
+.progetto__head { display: flex; gap: var(--space-m); margin-bottom: var(--gutter); }
+.progetto__head h3 { font-size: 2.4rem; }
+.progetto__head p  { max-width: 42rem; }
+@media (max-width: 600px) { .progetto__head { flex-direction: column; } }
+
+/* Griglia a 3 colonne dentro il progetto (2 su tablet, 1 su telefono) */
+.griglia-3 { display: grid; gap: var(--gutter); grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 860px) { .griglia-3 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .griglia-3 { grid-template-columns: 1fr; } }
+
+/* Banner con i loghi: banner--3 occupa tutta la riga, banner--1 una colonna */
+.banner {
+  display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+  gap: var(--space-m);
+  min-height: 8rem;
+  padding: var(--space-m);
+  background: var(--c-paper);
+  border: var(--border);
+  box-shadow: var(--shadow);
+}
+.banner img { max-height: 5rem; width: auto; }
+.banner--3 { grid-column: 1 / -1; }
+.banner--1 { grid-column: span 1; }
+
+
 /* Due colonne */
-.split { display: grid; gap: var(--space-l); grid-template-columns: 1fr 1fr; align-items: center; }
+.split { display: grid; gap: calc(var(--gutter) * 2); grid-template-columns: 1fr 1fr; align-items: center; }
 .split--top { align-items: start; }
 @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
 
 /* Numeri in "Chi siamo" */
-.stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-m); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); }
 .stat { margin: 0; padding: var(--space-m); text-align: center; }
-.stat:nth-child(even) { transform: translateY(var(--space-m)); }
-.stat strong { display: block; font-family: var(--font-heading); font-size: 2.6rem; line-height: 1; }
-.stat span { display: block; margin-top: .4rem; font-size: .85rem; font-weight: 700; text-transform: uppercase; }
+.stat:nth-child(even) { transform: translateY(var(--gutter)); }
+.stat strong { display: block; font-family: var(--font-primario); font-weight: 400; font-size: 3.4rem; line-height: 1; }
+.stat span { display: block; margin-top: .4rem; font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
 
 /* Supportaci */
 .code-box {
   display: flex; align-items: center; justify-content: space-between; gap: .5rem;
   width: 100%;
-  font-family: var(--font-secondario); font-size: .9rem;
-  
+  font-family: var(--font-secondario); font-size: 0.95rem; letter-spacing: .03em;
   background: var(--c-bg); border: 2px solid var(--c-ink);
   padding: .5rem .6rem;
   word-break: break-all;
   margin-top: auto;
 }
+/* Il codice fiscale e l'IBAN sono neri, non grigi: il grigio li faceva
+   sembrare un campo da compilare. */
+.card .code-box { color: var(--c-ink); }
 .code-box .btn { flex-shrink: 0; white-space: nowrap; }
 
 .partners { margin-top: var(--space-xl); text-align: center; }
-.partners__title { font-family: var(--font-heading); text-transform: uppercase; }
+.partners__title { font-family: var(--font-secondario); text-transform: uppercase; letter-spacing: .06em; }
 .partners__list { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-s); list-style: none; padding: 0; }
-.partners__list li { padding: .5rem 1rem; font-weight: 700; background: var(--c-paper); border: var(--border); }
+.partners__list li { padding: .5rem 1rem; background: var(--c-paper); border: var(--border); }
 .partners__list li:nth-child(odd)  { transform: rotate(-1.5deg); }
 .partners__list li:nth-child(even) { transform: rotate(1.5deg); }
 
 /* Contatti */
-.contact-list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-m); }
+.contact-list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--gutter); }
 .contact-list li { display: flex; align-items: center; gap: var(--space-s); }
 .contact-list .icon { background: var(--c-paper); }
-.contact-list__label { display: block; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
-.contact-list a { font-weight: 600; font-size: 1.1rem; word-break: break-word; }
+.contact-list__label { display: block; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+.contact-list a { font-size: 1.1rem; word-break: break-word; }
 
 .faq:hover { transform: none; box-shadow: var(--shadow); }
 .faq details { width: 100%; border-top: 2px solid var(--c-ink); padding: var(--space-s) 0; }
-.faq summary { cursor: pointer; font-weight: 700; }
-.faq summary::marker { color: var(--c-pink); }
+.faq summary { cursor: pointer; }
+.faq summary::marker { color: var(--AC-arancione); }
 .faq details p { margin-top: .5rem; }
 
 
 /* ---------- 7. FOOTER ---------- */
 .site-footer { background: var(--c-paper); padding-block: var(--space-l); font-size: .95rem; }
 .site-footer__inner { display: grid; gap: var(--space-s); text-align: center; justify-items: center; }
-.site-footer__brand { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; }
+.site-footer__brand { font-family: var(--font-primario); font-size: 1.8rem; line-height: 1; }
 .site-footer__copy { color: var(--c-muted); }
 
 
 /* ---------- 8. ARTICOLI E PAGINE INTERNE ---------- */
 .page-head { padding-block: var(--space-l) var(--space-m); }
-.page-head h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); }
+.page-head h1 { font-size: clamp(3rem, 7vw, 4.4rem); }
 
-.article-list { display: grid; gap: var(--space-m); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding-bottom: var(--space-xl); }
+.article-list { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding-bottom: var(--space-xl); }
 .article-card { padding: 0; text-decoration: none; overflow: hidden; }
 .article-card:hover { background: var(--c-paper); }
 .article-card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: var(--border); }
 .article-card__body { padding: var(--space-m); }
-.article-card h2 { font-size: 1.35rem; }
+.article-card h2 { font-size: 1.9rem; }
 
-.meta { font-size: .9rem; font-weight: 600; color: var(--c-muted); }
+.meta { font-size: .9rem; color: var(--c-muted); }
 
 .article { max-width: 720px; margin-inline: auto; padding-block: var(--space-l) var(--space-xl); }
-.article h1 { font-size: clamp(2rem, 5vw, 3rem); }
+.article h1 { font-size: clamp(2.6rem, 6vw, 3.8rem); }
 .article__cover { border: var(--border); box-shadow: var(--shadow); margin-block: var(--space-m); }
-.article__body h2 { font-size: 1.6rem; margin-top: var(--space-l); }
+.article__body h2 { font-size: 2.1rem; margin-top: var(--space-l); }
 .article__body img { border: var(--border); margin-block: var(--space-m); }
 .article__body blockquote {
   margin: var(--space-m) 0; padding: var(--space-m);
-  background: var(--c-sun); border: var(--border); box-shadow: var(--shadow-sm);
-  font-weight: 600;
+  background: var(--AC-giallo); border: var(--border); box-shadow: var(--shadow-sm);
 }
 .article__body blockquote p { margin: 0; }
 
-.notice { padding: var(--space-m); background: var(--c-peach); border: var(--border); box-shadow: var(--shadow-sm); }
+.notice { padding: var(--space-m); background: var(--AC-arancione); border: var(--border); box-shadow: var(--shadow-sm); }
