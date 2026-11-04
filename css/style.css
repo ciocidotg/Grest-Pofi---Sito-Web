@@ -17,6 +17,7 @@
    7. Footer
    8. Articoli e pagine interne
    9. Pagina del singolo articolo (lettura)
+   10. Icone
    ========================================================= */
 
 
@@ -366,9 +367,10 @@ a:hover { background: var(--AC-giallo); }
 /* Banner con i loghi: banner--3 occupa tutta la riga, banner--1 una colonna */
 .banner {
   display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
-  gap: var(--space-m);
-  min-height: 8rem;
+  gap: var(--space-xl);
+  min-height: 10rem;
   padding: var(--space-m);
+  
   background: var(--c-paper);
   border: var(--border);
   box-shadow: var(--shadow);
@@ -670,3 +672,8 @@ a:hover { background: var(--AC-giallo); }
 
 /* Fondo pagina */
 .lettura__fine { margin-top: var(--space-l); padding-top: var(--space-m); border-top: var(--border); }
+
+
+
+
+
