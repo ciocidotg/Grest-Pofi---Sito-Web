@@ -1,5 +1,6 @@
 ---
 titolo: Scrivi qui il titolo
+sottotitolo: Una frase che sta sotto il titolo, in corsivo, e invoglia a leggere.
 data: 2026-01-31
 autore: Aurora
 riassunto: Una o due frasi che compaiono nella lista degli articoli.

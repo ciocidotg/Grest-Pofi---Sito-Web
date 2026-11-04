@@ -22,6 +22,7 @@ Servono solo due cose: **scrivere il file** e **aggiungerlo all'elenco**.
 | Campo | Cosa scrivere | Esempio |
 |---|---|---|
 | titolo | Il titolo dell'articolo | Festa di apertura 2027 |
+| sottotitolo | Una frase sotto il titolo, in corsivo (facoltativo: se manca si usa il riassunto) | Musica, giochi e 200 bambini in cortile |
 | data | Anno-mese-giorno | 2027-07-13 |
 | autore | Chi firma | Aurora |
 | riassunto | 1-2 frasi per la lista | Una serata indimenticabile… |
@@ -45,6 +46,12 @@ Servono solo due cose: **scrivere il file** e **aggiungerlo all'elenco**.
 
 Se sbagli una regoletta non si rompe niente: al massimo vedrai gli asterischi nel testo.
 
+Cose che il sito fa da solo:
+- la **prima lettera** dell'articolo diventa grande, in un riquadro giallo;
+- il **grassetto** compare come una sottolineatura gialla, tipo evidenziatore;
+- una foto messa **da sola su una riga** mostra sotto la descrizione come didascalia;
+- in alto compaiono la data e i minuti di lettura, calcolati dalla lunghezza del testo.
+
 ## 3. Le foto
 
 - Mettile nella cartella `img/articoli/`, con nomi semplici (`apertura-2027.jpg`).
@@ -52,6 +59,8 @@ Se sbagli una regoletta non si rompe niente: al massimo vedrai gli asterischi ne
   così il sito resta veloce (ad esempio con squoosh.app, gratuito).
 - ⚠️ **Mai foto di bambini riconoscibili senza la liberatoria firmata dai genitori.**
   Nel dubbio, foto di spalle, da lontano o dei soli animatori maggiorenni.
+- La descrizione della foto diventa la didascalia che tutti leggono:
+  **niente nomi e cognomi di bambini** (va bene "I bambini della squadra gialla").
 
 ## 4. Aggiungi l'articolo all'elenco
 
