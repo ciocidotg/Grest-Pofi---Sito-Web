@@ -9,10 +9,29 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- ===================== MENU =====================
+       Uguale a quello di index.html: se lo cambiate lì, cambiatelo anche qui. -->
   <header class="site-header">
     <nav class="nav container" aria-label="Menu principale">
-      <a href="index.html" class="nav__logo"><img src="img/SOLESPILLA.png" alt="" width="44" height="40"><span>GREST POFI</span></a>
-      <a href="index.html">← Torna al sito</a>
+      <a href="index.html" class="nav__logo">
+        <img src="img/SOLESPILLA.png" alt="" width="44" height="40">
+        <span>GREST POFI</span>
+      </a>
+
+      <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu">
+        <span class="sr-only">Apri il menu</span>
+        <span class="nav__burger" aria-hidden="true"></span>
+      </button>
+
+      <ul class="nav__menu" id="nav-menu">
+        <li><a href="index.html#attivita">Attività</a></li>
+        <li><a href="index.html#chi-siamo">Chi siamo</a></li>
+        <li><a href="index.html#supportaci">Supportaci</a></li>
+        <li><a href="index.html#contatti">Contatti</a></li>
+        <li><a href="articoli.html">Articoli</a></li>
+        <li><a href="articoli.html">Extra</a></li>
+        <li><a href="index.html#supportaci" class="btn btn--primary btn--small">Dona il 5×1000</a></li>
+      </ul>
     </nav>
   </header>
 
@@ -43,5 +62,25 @@
 
     <p class="meta">Ultimo aggiornamento: ottobre 2026</p>
   </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p class="site-footer__brand">☀️ GREST POFI ODV</p>
+      <p>
+        Via Eugenio Giovannini snc, 03026 Pofi (FR)<br>
+        C.F. 92094440606 · Iscritta al RUNTS<br>
+        A cura di Antonello | Simone | Aurora<br>
+        Versione 0.1
+      </p>
+      <p>
+        <a href="articoli.html">Articoli</a> ·
+        <a href="privacy.html">Privacy</a> ·
+        <a href="#">Torna su ↑</a>
+      </p>
+      <p class="site-footer__copy">© <span data-year></span> Associazione Giovanile GREST POFI - ODV</p>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
 </body>
 </html>

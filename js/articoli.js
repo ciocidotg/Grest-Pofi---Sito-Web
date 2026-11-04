@@ -113,9 +113,12 @@ function markdown(testo) {
       const tipo = /^\d/.test(r) ? 'ol' : 'ul';
       if (lista !== tipo) { chiudiLista(); html += `<${tipo}>\n`; lista = tipo; }
       html += `<li>${inline(m[1])}</li>\n`;
-    } else if (/^!\[[^\]]*\]\([^)]+\)$/.test(r)) {
+    } else if ((m = r.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/))) {
+      // Foto da sola su una riga: diventa una figura, e la descrizione
+      // scritta tra [ ] compare sotto come didascalia
       chiudiParagrafo(); chiudiLista();
-      html += inline(r) + '\n';
+      const didascalia = m[1] ? `<figcaption>${escape(m[1])}</figcaption>` : '';
+      html += `<figure>${inline(r)}${didascalia}</figure>\n`;
     } else {
       chiudiLista();
       paragrafo.push(r);
@@ -133,34 +136,171 @@ function formattaData(iso) {
   return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
+// Tempo di lettura stimato: circa 200 parole al minuto
+function minutiDiLettura(testo) {
+  const parole = testo.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(parole / 200));
+}
+
 function mostraErrore(contenitore, messaggio) {
   contenitore.innerHTML = `<div class="notice"><p>${escape(messaggio)}</p></div>`;
 }
 
+// Aperto con doppio clic (indirizzo file://)? Il browser vieta di leggere
+// i file .md e elenco.txt: spieghiamo come aprire il sito nel modo giusto.
+// Online su Aruba questo messaggio non compare mai.
+function apertoDaFile(contenitore) {
+  if (location.protocol !== 'file:') return false;
+  contenitore.innerHTML = `
+    <div class="notice archivio__vuoto">
+      <p><strong>Gli articoli non si vedono perché il sito è aperto con un doppio clic.</strong></p>
+      <p>Per sicurezza il browser non lascia leggere i file degli articoli da una pagina aperta così.
+      Apri il sito con un piccolo server locale (istruzioni nel file LEGGIMI.md, sezione
+      "Provare il sito sul proprio computer"). Una volta caricato su Aruba funziona da solo.</p>
+    </div>`;
+  return true;
+}
+
 /* ---------- Pagina LISTA (articoli.html) ---------- */
+
+// Toglie maiuscole e accenti, così "Città" si trova anche cercando "citta"
+function normalizza(testo) {
+  return (testo || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
+// Toglie i simboli del Markdown dal testo, per la ricerca
+function soloTesto(corpo) {
+  return corpo
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, ' $1 ')   // foto → solo la descrizione
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, ' $1 ')    // link → solo il testo
+    .replace(/[#>*]/g, ' ');
+}
+
+// Colori dei riquadri per gli articoli senza copertina (si alternano)
+const COLORI_SCHEDA = ['giallo', 'azzurro', 'rosa', 'arancione'];
+
+// Il box di un articolo nella lista. "grande" = il primo, a tutta larghezza
+function schedaHTML(articolo, grande) {
+  const { nome, info, corpo, colore } = articolo;
+  const d = new Date(info.data + 'T12:00:00');
+  const valida = !isNaN(d);
+
+  // Copertina, oppure un riquadro colorato con la data stile "timbro"
+  const media = info.copertina
+    ? `<img src="${urlSicuro(info.copertina)}" alt="" loading="lazy">`
+    : `<span class="scheda__timbro" aria-hidden="true">${valida
+        ? `${d.getDate()}<small>${d.toLocaleDateString('it-IT', { month: 'short' })} ${d.getFullYear()}</small>`
+        : '☀️'}</span>`;
+
+  return `
+    <a class="card scheda${grande ? ' scheda--grande' : ''}" href="articolo.html?a=${nome}">
+      <div class="scheda__media scheda__media--${colore}">${media}</div>
+      <div class="scheda__corpo">
+        <p class="scheda__meta">
+          <time datetime="${escape(info.data || '')}">${escape(formattaData(info.data))}</time>
+          · ${minutiDiLettura(corpo)} min di lettura
+        </p>
+        <h2 class="scheda__titolo">${escape(info.titolo || nome)}</h2>
+        ${info.riassunto ? `<p>${escape(info.riassunto)}</p>` : ''}
+        <span class="scheda__leggi">Leggi l'articolo →</span>
+      </div>
+    </a>`;
+}
 
 async function paginaLista() {
   const box = document.getElementById('lista-articoli');
   if (!box) return;
+
+  const modulo     = document.getElementById('filtri');
+  const campoCerca = document.getElementById('filtro-cerca');
+  const campoAnno  = document.getElementById('filtro-anno');
+  const campoOrdine = document.getElementById('filtro-ordine');
+  const conteggio  = document.getElementById('conteggio');
+
+  if (apertoDaFile(box)) { modulo.hidden = true; return; }
+
+  // 1. Legge tutti gli articoli dell'elenco
+  let articoli;
   try {
     const nomi = await leggiElenco();
-    if (!nomi.length) return mostraErrore(box, 'Nessun articolo pubblicato, per ora.');
-
     const risultati = await Promise.allSettled(nomi.map(leggiArticolo));
-    const articoli = risultati.filter((r) => r.status === 'fulfilled').map((r) => r.value);
-
-    box.innerHTML = articoli.map(({ nome, info }) => `
-      <a class="card article-card" href="articolo.html?a=${nome}">
-        ${info.copertina ? `<img src="${urlSicuro(info.copertina)}" alt="" loading="lazy">` : ''}
-        <div class="article-card__body">
-          <p class="meta">${escape(formattaData(info.data))}${info.autore ? ' · ' + escape(info.autore) : ''}</p>
-          <h2>${escape(info.titolo || nome)}</h2>
-          ${info.riassunto ? `<p>${escape(info.riassunto)}</p>` : ''}
-        </div>
-      </a>`).join('');
+    articoli = risultati
+      .filter((r) => r.status === 'fulfilled')
+      .map((r, i) => {
+        const { info, corpo } = r.value;
+        return {
+          ...r.value,
+          posizione: i,                                 // ordine in elenco.txt
+          colore: COLORI_SCHEDA[i % COLORI_SCHEDA.length],
+          anno: /^\d{4}/.test(info.data || '') ? info.data.slice(0, 4) : '',
+          // tutto il testo in cui cercare, già "normalizzato"
+          perRicerca: normalizza([info.titolo, info.sottotitolo, info.riassunto, info.autore, soloTesto(corpo)].join(' ')),
+        };
+      });
   } catch (e) {
-    mostraErrore(box, 'Non riesco a caricare gli articoli. ' + e.message);
+    modulo.hidden = true;
+    return mostraErrore(box, 'Non riesco a caricare gli articoli. ' + e.message);
   }
+
+  if (!articoli.length) {
+    modulo.hidden = true;
+    return mostraErrore(box, 'Nessun articolo pubblicato, per ora.');
+  }
+
+  // 2. Riempie il menu degli anni con quelli presenti negli articoli
+  const anni = [...new Set(articoli.map((a) => a.anno).filter(Boolean))].sort().reverse();
+  campoAnno.insertAdjacentHTML('beforeend', anni.map((a) => `<option value="${a}">${a}</option>`).join(''));
+
+  // 3. Se l'indirizzo contiene già dei filtri (es. articoli.html?anno=2026), li applica
+  const parametri = new URLSearchParams(location.search);
+  campoCerca.value = parametri.get('q') || '';
+  if (anni.includes(parametri.get('anno'))) campoAnno.value = parametri.get('anno');
+  if (parametri.get('ordine') === 'vecchi') campoOrdine.value = 'vecchi';
+
+  // 4. Filtra, ordina e mostra. Viene richiamata a ogni modifica dei filtri.
+  function aggiorna() {
+    const parole = normalizza(campoCerca.value).split(/\s+/).filter(Boolean);
+    const anno = campoAnno.value;
+    const verso = campoOrdine.value === 'vecchi' ? 1 : -1;
+
+    const trovati = articoli
+      // ogni parola cercata deve comparire da qualche parte nell'articolo
+      .filter((a) => parole.every((p) => a.perRicerca.includes(p)))
+      .filter((a) => !anno || a.anno === anno)
+      // per data; a parità di data (o senza data) vale l'ordine di elenco.txt
+      .sort((a, b) => {
+        const da = a.info.data || '', db = b.info.data || '';
+        if (da !== db) return (da < db ? -1 : 1) * verso;
+        return a.posizione - b.posizione;
+      });
+
+    conteggio.textContent = trovati.length === 1 ? '1 articolo' : `${trovati.length} articoli`;
+
+    box.innerHTML = trovati.length
+      ? trovati.map((a, i) => schedaHTML(a, i === 0)).join('')
+      : `<div class="notice archivio__vuoto">
+           <p><strong>Nessun articolo trovato.</strong> Prova con un'altra parola o con un altro anno.</p>
+         </div>`;
+
+    // Tiene i filtri nell'indirizzo: così un link condiviso mostra gli stessi risultati
+    const nuovi = new URLSearchParams();
+    if (campoCerca.value.trim()) nuovi.set('q', campoCerca.value.trim());
+    if (anno) nuovi.set('anno', anno);
+    if (verso === 1) nuovi.set('ordine', 'vecchi');
+    const query = nuovi.toString();
+    history.replaceState(null, '', location.pathname + (query ? '?' + query : ''));
+  }
+
+  modulo.addEventListener('input', aggiorna);
+  modulo.addEventListener('change', aggiorna);
+  modulo.addEventListener('submit', (e) => { e.preventDefault(); aggiorna(); });
+  document.getElementById('filtri-azzera').addEventListener('click', () => {
+    modulo.reset();
+    aggiorna();
+    campoCerca.focus();
+  });
+
+  aggiorna();
 }
 
 /* ---------- Pagina ARTICOLO (articolo.html?a=nome) ---------- */
@@ -168,19 +308,35 @@ async function paginaLista() {
 async function paginaArticolo() {
   const box = document.getElementById('articolo');
   if (!box) return;
+  if (apertoDaFile(box)) return;
   const nome = new URLSearchParams(location.search).get('a') || '';
   if (!nomeValido(nome)) return mostraErrore(box, 'Articolo non trovato.');
 
   try {
     const { info, corpo } = await leggiArticolo(nome);
     const titolo = info.titolo || nome;
+    // Se manca il sottotitolo usiamo il riassunto, così non resta un buco
+    const sottotitolo = info.sottotitolo || info.riassunto || '';
     document.title = titolo + ' – Grest Pofi ODV';
+
+    // Struttura dell'articolo, dall'alto in basso:
+    // rubrica → titolo → sottotitolo → firma → copertina → testo → fine
     box.innerHTML = `
-      <p class="meta">${escape(formattaData(info.data))}${info.autore ? ' · ' + escape(info.autore) : ''}</p>
-      <h1>${escape(titolo)}</h1>
-      ${info.copertina ? `<img class="article__cover" src="${urlSicuro(info.copertina)}" alt="">` : ''}
-      <div class="article__body">${markdown(corpo)}</div>
-      <p><a href="articoli.html">← Tutti gli articoli</a></p>`;
+      <header class="lettura__head">
+        <p class="sticker">Gli articoli di Aurora</p>
+        <h1 class="lettura__titolo">${escape(titolo)}</h1>
+        ${sottotitolo ? `<p class="lettura__sottotitolo">${escape(sottotitolo)}</p>` : ''}
+        <p class="lettura__firma">
+          ${info.autore ? `<span>Di <strong>${escape(info.autore)}</strong></span>` : ''}
+          <span><time datetime="${escape(info.data || '')}">${escape(formattaData(info.data))}</time></span>
+          <span>${minutiDiLettura(corpo)} min di lettura</span>
+        </p>
+      </header>
+      ${info.copertina ? `<figure class="lettura__copertina"><img src="${urlSicuro(info.copertina)}" alt=""></figure>` : ''}
+      <div class="lettura__testo">${markdown(corpo)}</div>
+      <footer class="lettura__fine">
+        <a class="btn" href="articoli.html">← Tutti gli articoli</a>
+      </footer>`;
   } catch (e) {
     mostraErrore(box, 'Articolo non trovato.');
   }

@@ -43,6 +43,16 @@ Serve un mini server locale, a scelta:
 - oppure, da terminale nella cartella del sito: `python -m http.server 8000`
   e poi aprire `http://localhost:8000`
 
+**Su Mac, passo per passo:**
+1. Apri *Terminale* (Cmd + Spazio, scrivi "Terminale").
+2. Scrivi `cd ` (con lo spazio dopo), trascina la cartella del sito nella finestra e premi Invio.
+3. Scrivi `python3 -m http.server 8000` e premi Invio.
+   La prima volta il Mac può chiedere di installare gli "strumenti per sviluppatori": accetta.
+4. Nel browser apri `http://localhost:8000`. Per fermare il server: Ctrl + C nel Terminale.
+
+Se apri le pagine con doppio clic, al posto degli articoli compare un riquadro
+che spiega proprio questo.
+
 Su Aruba funziona tutto senza configurazioni.
 
 ## Le cose da completare (cercate "DA COMPLETARE" e "DA VERIFICARE")
@@ -97,20 +107,46 @@ angoli vivi, colori della palette **Armonia Circolare**.
 Sono font gratuiti (licenza OFL). Li ospitiamo sul nostro sito invece di
 caricarli da Google Fonts, che per il GDPR è sconsigliato.
 
-I file sono già nella cartella `fonts/`:
-- `instrument-serif-latin-400-normal.woff2` → titoli
-- `cal-sans-latin-400-normal.woff2` → testi
+Nella cartella `fonts/` servono tre file:
+- `instrument-serif-latin-400-normal.woff2` → titoli del sito e testo degli articoli
+- `instrument-serif-latin-400-italic.woff2` → sottotitoli degli articoli e *corsivo*
+  (**da scaricare**: su fontsource.org cercate *Instrument Serif*, stile *Italic*, sottoinsieme *latin*)
+- `cal-sans-latin-400-normal.woff2` → testi del sito e titoli degli articoli
 
-Entrambi esistono solo nel peso normale (400), quindi nel CSS non usiamo
+Esistono solo nel peso normale (400), quindi nel CSS non usiamo
 il grassetto: lo farebbe il browser "a mano" e verrebbe sbavato.
+Finché manca il file del corsivo, al suo posto si vede il corsivo di Georgia.
+
+## Pagina con tutti gli articoli
+
+`articoli.html` mostra gli articoli come box (classe `scheda`, stile nella sezione 8
+di `style.css`). Il più recente è un box grande a tutta riga. Se un articolo non ha
+copertina, al suo posto c'è un riquadro colorato con la data.
+
+I filtri (logica in `js/articoli.js`, funzione `paginaLista`):
+- **Cerca**: cerca in titolo, sottotitolo, riassunto, autore e testo. Più parole
+  vanno trovate tutte; maiuscole e accenti non contano ("citta" trova "città").
+- **Anno**: il menu si riempie da solo con gli anni delle date degli articoli.
+- **Data di aggiunta**: più recenti o meno recenti prima, secondo il campo `data:`.
+
+I filtri restano nell'indirizzo (es. `articoli.html?anno=2026&q=presepe`):
+un link così si può condividere e mostra gli stessi risultati.
+
+## Pagina del singolo articolo
+
+`articolo.html` è impaginata come una rivista (sezione 9 di `style.css`):
+titolo in Cal Sans, sottotitolo in Instrument Serif corsivo, testo in Instrument Serif,
+in una colonna stretta. La larghezza della colonna si cambia con `--colonna`.
+Il sottotitolo viene dal campo `sottotitolo:` del file `.md`; se manca, si usa `riassunto:`.
 Se cambiate nome a un file, correggetelo nella sezione 2 del CSS.
 
-## Attivare il link "Articoli" nel menu
+## Menu e footer
 
-In `index.html`, nel menu, togliete il commento alla riga:
-```html
-<!-- <li><a href="articoli.html">Articoli</a></li> -->
-```
+Il link "Articoli" è attivo nel menu e nel footer di tutte le pagine.
+`articoli.html`, `articolo.html` e `privacy.html` hanno lo stesso menu e lo stesso
+footer della home, con i link che puntano a `index.html#sezione`.
+**Se cambiate il menu o il footer in `index.html`, cambiateli anche in queste tre pagine.**
+La voce della pagina in cui ci si trova ha `aria-current="page"` e appare evidenziata in giallo.
 
 ## Pubblicare su Aruba
 

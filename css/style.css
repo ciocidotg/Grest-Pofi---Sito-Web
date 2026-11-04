@@ -16,6 +16,7 @@
    6. Sezioni della home
    7. Footer
    8. Articoli e pagine interne
+   9. Pagina del singolo articolo (lettura)
    ========================================================= */
 
 
@@ -81,6 +82,15 @@
   src: url("../fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
+}
+/* Corsivo di Instrument Serif: è un file a parte (sottotitoli degli articoli
+   e *corsivo* nel testo). Va scaricato da fontsource.org: vedi LEGGIMI.md. */
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../fonts/instrument-serif-latin-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
   font-display: swap;
 }
 @font-face {
@@ -237,6 +247,8 @@ a:hover { background: var(--AC-giallo); }
   text-decoration: none;
 }
 .nav__menu li:last-child { margin-left: .75rem; }
+/* Voce della pagina in cui ci si trova (es. "Articoli") */
+.nav__menu a[aria-current="page"] { background: var(--AC-giallo); }
 
 .nav__toggle { display: none; background: var(--AC-giallo); border: var(--border); padding: .6rem .5rem; cursor: pointer; }
 .nav__burger, .nav__burger::before, .nav__burger::after {
@@ -256,7 +268,7 @@ a:hover { background: var(--AC-giallo); }
     padding: var(--space-s) var(--gutter) var(--space-m);
   }
   .nav__menu.is-open { display: flex; }
-  .nav__menu a:not(.btn) { padding: .8rem 0; font-size: 1rem; border-bottom: 2px solid var(--c-bg); }
+  .nav__menu a:not(.btn) { padding: .8rem .6rem; font-size: 1rem; border-bottom: 2px solid var(--c-bg); }
   .nav__menu li:last-child { margin: var(--space-s) 0 0; }
   .nav__menu .btn { display: block; text-align: center; }
 }
@@ -425,24 +437,236 @@ a:hover { background: var(--AC-giallo); }
 .page-head { padding-block: var(--space-l) var(--space-m); }
 .page-head h1 { font-size: clamp(3rem, 7vw, 4.4rem); }
 
-.article-list { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); padding-bottom: var(--space-xl); }
-.article-card { padding: 0; text-decoration: none; overflow: hidden; }
-.article-card:hover { background: var(--c-paper); }
-.article-card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: var(--border); }
-.article-card__body { padding: var(--space-m); }
-.article-card h2 { font-size: 1.9rem; }
+/* --- Archivio degli articoli (articoli.html) --- */
+.archivio { padding-bottom: var(--space-xl); }
+
+/* Barra dei filtri: ricerca larga, poi anno, ordine e "Azzera" */
+.filtri {
+  display: grid; gap: var(--space-s) var(--gutter);
+  grid-template-columns: 2fr 1fr 1fr auto;
+  align-items: end;
+  padding: var(--space-m);
+  margin-bottom: var(--space-m);
+}
+.filtri[hidden] { display: none; }
+@media (max-width: 860px) {
+  .filtri { grid-template-columns: 1fr 1fr; }
+  .filtri__campo--cerca { grid-column: 1 / -1; }
+  .filtri .btn { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) { .filtri { grid-template-columns: 1fr; } }
+
+.filtri__campo label {
+  display: block; margin-bottom: .35rem;
+  font-size: .8rem; text-transform: uppercase; letter-spacing: .08em;
+}
+.filtri input,
+.filtri select {
+  width: 100%;
+  padding: .7rem .8rem;
+  font: inherit;
+  color: var(--c-ink);
+  background-color: var(--c-bg);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+.filtri input::placeholder { color: var(--c-muted); }
+/* Menu a tendina: freccia disegnata con due triangoli, uguale su tutti i browser */
+.filtri select {
+  appearance: none; -webkit-appearance: none;
+  padding-right: 2.4rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--c-ink) 50%),
+    linear-gradient(135deg, var(--c-ink) 50%, transparent 50%);
+  background-position: calc(100% - 1.15rem) 55%, calc(100% - .8rem) 55%;
+  background-size: .36rem .36rem;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.filtri input:focus-visible,
+.filtri select:focus-visible { outline: 3px solid var(--AC-verde); outline-offset: 2px; background-color: var(--c-paper); }
+
+.archivio__conteggio { font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: var(--space-m); }
+
+/* Griglia dei box */
+.archivio__griglia { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+.archivio__vuoto { grid-column: 1 / -1; }
+
+/* Box di un articolo: è una .card, con l'immagine in alto senza margini */
+.scheda { padding: 0; overflow: hidden; text-decoration: none; }
+.scheda:hover { background: var(--c-paper); }
+.scheda__media {
+  position: relative;
+  width: 100%; aspect-ratio: 16 / 9;
+  display: grid; place-items: center;
+  border-bottom: var(--border);
+}
+/* La foto riempie il riquadro e viene ritagliata: così tutti i box
+   hanno la stessa altezza, qualunque sia la forma della foto */
+.scheda__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.scheda__media--giallo    { background: var(--AC-giallo); }
+.scheda__media--azzurro   { background: var(--AC-azzurro); }
+.scheda__media--rosa      { background: var(--AC-rosa); }
+.scheda__media--arancione { background: var(--AC-arancione); }
+
+/* "Timbro" con la data, al posto della copertina quando manca */
+.scheda__timbro {
+  display: grid; justify-items: center;
+  padding: .5rem 1.1rem .7rem;
+  font-family: var(--font-primario);
+  font-size: 3.4rem; line-height: 1;
+  background: var(--c-paper);
+  border: var(--border);
+  box-shadow: var(--shadow-sm);
+  transform: rotate(-3deg);
+}
+.scheda__timbro small { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; margin-top: .3rem; }
+
+.scheda__corpo { display: flex; flex-direction: column; flex: 1; width: 100%; padding: var(--space-m); }
+.scheda__meta { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
+.card .scheda__meta { color: var(--c-ink); }
+.scheda__titolo { font-size: 2rem; }
+.scheda__leggi {
+  margin-top: auto; padding-top: var(--space-s);
+  font-size: .85rem; text-transform: uppercase; letter-spacing: .06em;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px;
+  text-decoration-color: var(--AC-arancione);
+}
+
+/* Il primo box è grande: a tutta riga, con immagine a sinistra su schermi larghi */
+.scheda--grande { grid-column: 1 / -1; }
+.scheda--grande .scheda__titolo { font-size: clamp(2.2rem, 4vw, 3.2rem); }
+@media (min-width: 860px) {
+  .scheda--grande { flex-direction: row; align-items: stretch; }
+  .scheda--grande .scheda__media { width: 55%; flex-shrink: 0; aspect-ratio: auto; min-height: 20rem; border-bottom: 0; border-right: var(--border); }
+  .scheda--grande .scheda__corpo { padding: calc(var(--gutter) * 1.2); justify-content: center; }
+  .scheda--grande .scheda__leggi { margin-top: var(--space-s); }
+}
 
 .meta { font-size: .9rem; color: var(--c-muted); }
 
+/* Pagine di testo semplici (es. privacy.html) */
 .article { max-width: 720px; margin-inline: auto; padding-block: var(--space-l) var(--space-xl); }
 .article h1 { font-size: clamp(2.6rem, 6vw, 3.8rem); }
-.article__cover { border: var(--border); box-shadow: var(--shadow); margin-block: var(--space-m); }
-.article__body h2 { font-size: 2.1rem; margin-top: var(--space-l); }
-.article__body img { border: var(--border); margin-block: var(--space-m); }
-.article__body blockquote {
-  margin: var(--space-m) 0; padding: var(--space-m);
-  background: var(--AC-giallo); border: var(--border); box-shadow: var(--shadow-sm);
-}
-.article__body blockquote p { margin: 0; }
-
 .notice { padding: var(--space-m); background: var(--AC-arancione); border: var(--border); box-shadow: var(--shadow-sm); }
+
+
+/* ---------- 9. PAGINA DEL SINGOLO ARTICOLO (articolo.html) ----------
+   Impaginazione da rivista: una colonna stretta al centro, comoda da
+   leggere (circa 65-70 caratteri per riga). Solo la copertina è più larga.
+   - Titolo:      Cal Sans (è già un font "pieno", non serve il grassetto)
+   - Sottotitolo: Instrument Serif corsivo
+   - Testo:       Instrument Serif
+   Instrument Serif è stretto e ha le lettere piccole: per questo il testo
+   è più grande del resto del sito. */
+.lettura {
+  --colonna: 42rem;   /* larghezza della colonna di testo */
+  padding-block: var(--space-l) var(--space-xl);
+}
+.lettura > * { max-width: var(--colonna); margin-inline: auto; }
+
+/* Intestazione */
+.lettura__titolo {
+  font-family: var(--font-primario);
+  font-size: clamp(2.6rem, 7vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -.02em;
+  word-spacing: normal;
+  margin-bottom: var(--space-m);
+}
+.lettura__sottotitolo {
+  font-family: var(--font-secondario);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.4vw, 2rem);
+  line-height: 1.2;
+  word-spacing: normal;
+  margin-bottom: var(--space-m);
+}
+/* Firma: autore, data e tempo di lettura tra due righe nere */
+.lettura__firma {
+  display: flex; flex-wrap: wrap; gap: .4rem 1.2rem;
+  margin: 0;
+  padding-block: .8rem;
+  border-block: var(--border);
+  font-size: .8rem; text-transform: uppercase; letter-spacing: .08em;
+}
+.lettura__firma strong { font-weight: 400; background: var(--AC-giallo); padding-inline: .3em; }
+
+/* Copertina: più larga della colonna di testo */
+.lettura__copertina { max-width: 60rem; margin-block: var(--space-l); }
+.lettura__copertina img { width: 100%; border: var(--border); box-shadow: var(--shadow); }
+.lettura__head + .lettura__testo { margin-top: var(--space-l); }
+
+/* Testo */
+.lettura__testo {
+  font-family: var(--font-secondario);
+  font-size: clamp(1.25rem, 1.05rem + .8vw, 1.55rem);
+  line-height: 1.5;
+  word-spacing: normal;
+}
+.lettura__testo p, .lettura__testo ul, .lettura__testo ol { margin: 0 0 1em; }
+.lettura__testo li { margin-bottom: .3em; }
+.lettura__testo li::marker { color: var(--AC-arancione); }
+
+/* Capolettera: la prima lettera dell'articolo, grande e in un riquadro giallo */
+.lettura__testo > p:first-child::first-letter {
+  float: left;
+  margin: .1em .25em 0 0;
+  padding: .1em .18em;
+  font-family: var(--font-primario);
+  font-size: 3.4em;
+  line-height: .9;
+  background: var(--AC-giallo);
+  border: var(--border);
+}
+
+/* Sottotitoli scritti nel testo con # e ## */
+.lettura__testo h2, .lettura__testo h3 {
+  font-family: var(--font-primario);
+  letter-spacing: -.01em;
+  margin: 1.8em 0 .5em;
+}
+.lettura__testo h2 { font-size: 1.6em; }
+.lettura__testo h3 { font-size: 1.2em; }
+
+/* Instrument Serif non ha il grassetto: il **grassetto** diventa
+   una sottolineatura gialla a evidenziatore */
+.lettura__testo strong {
+  font-weight: 400;
+  background: linear-gradient(transparent 58%, var(--AC-giallo) 58%);
+}
+.lettura__testo a { text-decoration-color: var(--AC-arancione); }
+
+/* Citazione (> nel testo): grande, in corsivo, tra due righe nere */
+.lettura__testo blockquote {
+  margin: 1.6em 0;
+  padding: .8em 0;
+  border-block: var(--border);
+  font-style: italic;
+  font-size: 1.5em;
+  line-height: 1.2;
+}
+.lettura__testo blockquote p { margin: 0; }
+
+/* Foto nel testo, con didascalia */
+.lettura__testo figure { margin: 1.6em 0; }
+.lettura__testo figure img { width: 100%; border: var(--border); box-shadow: var(--shadow); }
+.lettura__testo figcaption {
+  margin-top: .8rem;
+  font-family: var(--font-primario);
+  font-size: .9rem; line-height: 1.4;
+  color: var(--c-muted);
+}
+
+/* Segno di fine articolo: un quadratino giallo dopo l'ultima parola */
+.lettura__testo > p:last-child::after {
+  content: "";
+  display: inline-block;
+  width: .55em; height: .55em;
+  margin-left: .35em;
+  background: var(--AC-giallo);
+  border: 2px solid var(--c-ink);
+}
+
+/* Fondo pagina */
+.lettura__fine { margin-top: var(--space-l); padding-top: var(--space-m); border-top: var(--border); }
