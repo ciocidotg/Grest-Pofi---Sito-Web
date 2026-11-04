@@ -296,12 +296,90 @@ a:hover { background: var(--AC-giallo); }
 .hero__subtitle { max-width: 34rem; font-size: 1.2rem; color: var(--c-muted); }
 .hero__subtitle strong { color: var(--c-ink); }
 .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-m); }
-.hero__media { margin: 0; overflow: hidden; transform: rotate(1.5deg); }
-.hero__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+/* min-width: 0 → le colonne possono restringersi: senza, la lavagna
+   (larga 1000px "veri") allargherebbe la griglia oltre lo schermo */
+.hero__inner > * { min-width: 0; }
 
 @media (max-width: 860px) {
   .hero__inner { grid-template-columns: 1fr; padding-block: var(--space-l); }
-  .hero__media { transform: none; }
+}
+
+/* ---------- 6b. LAVAGNA "DISEGNA IL TUO SOLE" ----------
+   Usa solo le variabili della sezione 1: cambiando quelle, cambia anche la lavagna.
+   NB: la lavagna NON è ruotata come gli adesivi, altrimenti il
+   tratto non cadrebbe esattamente sotto il dito. */
+.lavagna {
+  display: grid;
+  gap: var(--space-s);
+  padding: var(--space-m);
+  background: var(--c-paper);
+  border: var(--border);
+  box-shadow: var(--shadow-lg);
+}
+.lavagna .sticker { justify-self: start; margin-bottom: 0; }
+.lavagna__titolo { font-size: clamp(2.2rem, 4vw, 2.8rem); margin: 0; }
+.lavagna__aiuto { margin: 0; color: var(--c-muted); font-size: 1rem; }
+
+/* Riga degli strumenti */
+.lavagna__barra { display: flex; flex-wrap: wrap; gap: .5rem; }
+.lavagna__strumento {
+  display: inline-flex; align-items: center; gap: .4rem;
+  min-height: 44px;                      /* misura minima comoda per il dito */
+  padding: .4rem .75rem;
+  font: inherit; font-size: .8rem;
+  text-transform: uppercase; letter-spacing: .04em;
+  color: var(--c-ink);
+  background: var(--c-paper);
+  border: var(--border);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s;
+}
+.lavagna__strumento svg { width: 20px; height: 20px; flex-shrink: 0; }
+/* Strumento scelto: giallo e "schiacciato" */
+.lavagna__strumento[aria-pressed="true"] { background: var(--AC-giallo); transform: translate(3px, 3px); box-shadow: none; }
+.lavagna__strumento--annulla { margin-left: auto; }
+
+/* Tavolozza dei colori: ogni pulsante prende il colore da --colore */
+.lavagna__colori { display: flex; flex-wrap: wrap; gap: .5rem; }
+.lavagna__colore {
+  width: 44px; height: 44px; padding: 0;
+  background: var(--colore);
+  border: var(--border);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s;
+}
+.lavagna__colore[aria-pressed="true"] {
+  transform: translate(3px, 3px); box-shadow: none;
+  outline: 3px solid var(--c-ink); outline-offset: 3px;
+}
+
+/* Spessore del pennello */
+.lavagna__spessore { display: flex; align-items: center; gap: var(--space-s); }
+.lavagna__spessore label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+.lavagna__spessore input { flex: 1; min-width: 0; accent-color: var(--c-ink); }
+.lavagna__spessore output { min-width: 2ch; font-variant-numeric: tabular-nums; }
+
+/* Il foglio da disegno */
+.lavagna__tela {
+  display: block;
+  width: 100%; max-width: 100%; height: auto;
+  aspect-ratio: 1 / 1;
+  background: #ffffff;
+  border: var(--border);
+  touch-action: none;                    /* sul telefono il dito disegna invece di scorrere la pagina */
+  cursor: crosshair;
+}
+
+.lavagna__azioni { display: flex; flex-wrap: wrap; gap: var(--space-s); }
+.lavagna__azioni .btn--primary { margin-left: auto; }
+
+@media (max-width: 480px) {
+  .lavagna { padding: var(--space-s); }
+  .lavagna__strumento span { display: none; }   /* sul telefono piccolo restano solo le icone */
+  .lavagna__strumento--annulla { margin-left: 0; }
+  .lavagna__azioni .btn--primary { margin-left: 0; width: 100%; text-align: center; }
 }
 
 /* Nastro scorrevole */
