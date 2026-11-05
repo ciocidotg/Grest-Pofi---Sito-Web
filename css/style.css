@@ -137,6 +137,8 @@ img, svg { max-width: 100%; height: auto; display: block; }
 a { color: var(--c-ink); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 a:hover { background: var(--AC-giallo); }
 
+.collegamentoArticolo { text-decoration:none;} /*Per nascondere il link dell'articolo*/
+
 :focus-visible { outline: 3px solid var(--AC-verde); outline-offset: 3px; }
 
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
@@ -332,7 +334,8 @@ a:hover { background: var(--AC-giallo); }
 .card:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
 .card p { color: var(--c-muted); }
 .card .btn { margin-top: auto; }
-.blocco:hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
+.blocco:not(.blocco-altre-attivita):hover { transform: translate(-2px, -2px); box-shadow: var(--shadow-lg); }
+ 
 /* Card grande a tutta larghezza (es. Grest campo estivo) */
 .card--featured {
   grid-column: 1 / -1;
@@ -344,6 +347,9 @@ a:hover { background: var(--AC-giallo); }
 
 /* Blocchi della sezione Attività: ogni blocco è separato dal precedente */
 .blocco + .blocco { margin-top: calc(var(--gutter) * 2); }
+
+.blocco + .blocco-altre-attivita{ margin-top: calc(var(--gutter) * 2); } /*Blocco Armonia- blocco altre attività*/
+
 .blocco__titolo { font-size: 2.4rem; margin-bottom: var(--gutter); }
 
 /* Progetto (es. Armonia Circolare): un riquadro colorato che contiene
@@ -673,6 +679,8 @@ a:hover { background: var(--AC-giallo); }
 /* Fondo pagina */
 .lettura__fine { margin-top: var(--space-l); padding-top: var(--space-m); border-top: var(--border); }
 
+
+.collegamentoArticolo { text-decoration:none;}
 
 
 

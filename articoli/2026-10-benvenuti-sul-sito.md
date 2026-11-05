@@ -1,7 +1,7 @@
 ---
-titolo: Benvenuti sul nuovo sito del Grest Pofi!
-data: 2026-10-26
-autore: Aurora
+titolo: Sataa
+data: 2026-11-05
+autore: Antonello
 riassunto: Da oggi abbiamo una casa online tutta nostra. Ecco cosa troverete qui.
 copertina:
 ---
