@@ -75,32 +75,82 @@
           </div>
         </div>
 
-        <!-- Riquadro immagine: sostituite il disegno con una foto
-             <img src="img/hero.jpg" alt="Descrizione della foto">
-             I colori del disegno sono scritti qui dentro e non seguono la palette:
-             è solo un segnaposto. -->
-        <figure class="hero__media box">
-          <svg viewBox="0 0 400 300" role="img" aria-label="Illustrazione: il sole sopra le colline di Pofi">
-            <rect width="400" height="300" fill="#36b6f2"/>
-            <circle cx="290" cy="95" r="52" fill="#ffd23f" stroke="#111111" stroke-width="5"/>
-            <path d="M0 215 Q90 150 180 200 T400 175 V300 H0Z" fill="#6fdcb4" stroke="#111111" stroke-width="5"/>
-            <path d="M0 255 Q120 205 240 245 T400 235 V300 H0Z" fill="#ffb38a" stroke="#111111" stroke-width="5"/>
-            <g fill="#ffffff" stroke="#111111" stroke-width="5">
-              <rect x="70" y="150" width="48" height="52"/>
-              <path d="M64 152 L94 122 L124 152Z"/>
-              <rect x="128" y="130" width="22" height="70"/>
-              <path d="M124 132 L139 108 L154 132Z"/>
-            </g>
-          </svg>
-        </figure>
+        <!-- =====================================================
+             LAVAGNA "DISEGNA IL TUO SOLE"
+             Lo stile è in css/style.css (sezione "Lavagna"), il codice in js/lavagna.js.
+             PRIVACY: il disegno resta sul dispositivo di chi lo fa,
+             non viene inviato né salvato da nessuna parte.
+             ===================================================== -->
+        <div class="lavagna">
+          <p class="sticker sticker--rosa">Tocca a te</p>
+          <h2 class="lavagna__titolo">Disegna il tuo sole</h2>
+          <p class="lavagna__aiuto">Coloralo con il secchiello, aggiungi i tuoi scarabocchi e scarica il disegno.</p>
+
+          <!-- Strumenti: aria-pressed="true" indica quello scelto -->
+          <div class="lavagna__barra" role="group" aria-label="Strumenti">
+            <button type="button" class="lavagna__strumento" data-strumento="pennello" aria-pressed="true" aria-label="Pennello">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.4 2.6a2 2 0 0 1 2.9 2.9L10 16.8 7.2 14z"/><path d="M7.2 14c-2 0-3.7 1.6-3.7 3.6 0 1.4-.8 2.4-1.5 2.9 4 .6 8-1 8-3.7z"/></svg>
+              <span>Pennello</span>
+            </button>
+            <button type="button" class="lavagna__strumento" data-strumento="riempi" aria-pressed="false" aria-label="Riempi">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 11 6-6 8 8-6 6a2 2 0 0 1-2.8 0L5 13.8a2 2 0 0 1 0-2.8z"/><path d="M5 12h14"/><path d="M20 17c0 1.5 1 2.2 1 3a1 1 0 0 1-2 0c0-.8 1-1.5 1-3z"/></svg>
+              <span>Riempi</span>
+            </button>
+            <button type="button" class="lavagna__strumento" data-strumento="gomma" aria-pressed="false" aria-label="Gomma">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 21-4.3-4.3a1 1 0 0 1 0-1.4l10-10a1 1 0 0 1 1.4 0l5.6 5.6a1 1 0 0 1 0 1.4L12 20"/><path d="M7 21h14"/><path d="m8 10 6 6"/></svg>
+              <span>Gomma</span>
+            </button>
+            <button type="button" class="lavagna__strumento lavagna__strumento--annulla" data-azione="annulla" aria-label="Annulla">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>
+              <span>Annulla</span>
+            </button>
+          </div>
+
+          <!-- Colori: per aggiungerne uno copiate una riga e cambiate
+               data-colore, --colore e aria-label (il nome letto ad alta voce).
+               Il bianco non c'è: per cancellare si usa la Gomma. -->
+          <div class="lavagna__colori" role="group" aria-label="Colori">
+            <button type="button" class="lavagna__colore" data-colore="#fcca59" style="--colore:#fcca59" aria-label="Giallo" aria-pressed="true"></button>
+            <button type="button" class="lavagna__colore" data-colore="#f5793b" style="--colore:#f5793b" aria-label="Arancione" aria-pressed="false"></button>
+            <button type="button" class="lavagna__colore" data-colore="#e2382b" style="--colore:#e2382b" aria-label="Rosso" aria-pressed="false"></button>
+            <button type="button" class="lavagna__colore" data-colore="#e49bbc" style="--colore:#e49bbc" aria-label="Rosa" aria-pressed="false"></button>
+            <button type="button" class="lavagna__colore" data-colore="#7d5ba6" style="--colore:#7d5ba6" aria-label="Viola" aria-pressed="false"></button>
+            <button type="button" class="lavagna__colore" data-colore="#9fb6f0" style="--colore:#9fb6f0" aria-label="Azzurro" aria-pressed="false"></button>
+            <button type="button" class="lavagna__colore" data-colore="#267f53" style="--colore:#267f53" aria-label="Verde" aria-pressed="false"></button>
+            <button type="button" class="lavagna__colore" data-colore="#8a5a3b" style="--colore:#8a5a3b" aria-label="Marrone" aria-pressed="false"></button>
+            <button type="button" class="lavagna__colore" data-colore="#111111" style="--colore:#111111" aria-label="Nero" aria-pressed="false"></button>
+          </div>
+
+          <div class="lavagna__spessore">
+            <label for="lavagna-spessore">Spessore</label>
+            <input type="range" id="lavagna-spessore" min="6" max="60" step="2" value="24">
+            <output for="lavagna-spessore" data-spessore>24</output>
+          </div>
+
+          <!-- Il foglio da disegno: 1000×1000 pixel, ridimensionato dal CSS -->
+          <canvas class="lavagna__tela" width="1000" height="1000" role="img" aria-label="Lavagna da disegno con un sole da colorare"></canvas>
+
+          <div class="lavagna__azioni">
+            <button type="button" class="btn btn--small" data-azione="nuovo-sole">Nuovo sole</button>
+            <button type="button" class="btn btn--small" data-azione="foglio-bianco">Foglio bianco</button>
+            <button type="button" class="btn btn--primary btn--small" data-azione="scarica">Scarica PNG</button>
+          </div>
+
+          <!-- Messaggi per i lettori di schermo (invisibile) -->
+          <p class="sr-only" aria-live="polite" data-annuncio></p>
+        </div>
       </div>
 
-      <!-- Nastro scorrevole: per cambiare le parole modificate entrambe le liste -->
+      <!-- Nastro scorrevole: scrivete le parole qui, una volta sola.
+           Il JavaScript (js/main.js, punto 5) le ripete da solo quante volte
+           serve per riempire lo schermo, così il nastro non resta mai vuoto. -->
       <div class="ribbon" aria-hidden="true">
         <div class="ribbon__track">
-          <span>Comunità ★ Inclusione ★ Divertimento ★ Pace ★ Tranquillità ★ Coesione ★</span>
-          <span>Famiglia ★ Gioco ★ Collaborazione ★ Unione ★ Diversità ★ Volontariato ★</span>
-          <span>Armonia ★ Esplorazione ★ Assertività ★ Spensieratezza ★ Gruppo ★ Compagnia ★</span>
+          <div class="ribbon__gruppo">
+            <span>Comunità ★ Inclusione ★ Divertimento ★ Pace ★ Tranquillità ★ Coesione ★</span>
+            <span>Famiglia ★ Gioco ★ Collaborazione ★ Unione ★ Diversità ★ Volontariato ★</span>
+            <span>Armonia ★ Esplorazione ★ Assertività ★ Spensieratezza ★ Gruppo ★ Compagnia ★</span>
+          </div>
         </div>
       </div>
     </section>
@@ -404,5 +454,6 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/lavagna.js"></script>
 </body>
 </html>

@@ -16,6 +16,7 @@ grest-pofi-sito/
 │   └── style.css         ← tutto lo stile; le variabili sono in cima
 ├── js/
 │   ├── main.js           ← menu mobile, pulsanti "Copia", anno nel footer
+│   ├── lavagna.js        ← lavagna "Disegna il tuo sole" nella splash (scarica il PNG)
 │   └── articoli.js       ← legge e mostra gli articoli
 ├── fonts/                ← file dei font (Instrument Serif e Cal Sans)
 ├── img/
