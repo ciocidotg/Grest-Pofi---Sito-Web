@@ -37,6 +37,11 @@
   <!-- Il contenuto dell'articolo viene scritto qui dentro da js/articoli.js
        (funzione paginaArticolo). Lo stile è nella sezione 9 di style.css. -->
   <main class="container">
+    <!-- Tasto "Indietro": torna alla pagina da cui si è arrivati
+         (js/main.js, punto 4). Se si arriva da fuori, porta all'elenco degli articoli. -->
+    <p class="lettura__indietro">
+      <a href="articoli.html" class="btn btn--small" data-indietro>← Indietro</a>
+    </p>
     <article class="lettura" id="articolo">
       <p class="meta">Caricamento…</p>
     </article>

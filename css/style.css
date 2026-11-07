@@ -323,12 +323,75 @@ height: 40px;
 .hero__subtitle { max-width: 34rem; font-size: 1.2rem; color: var(--c-muted); }
 .hero__subtitle strong { color: var(--c-ink); }
 .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-s); margin-top: var(--space-m); }
-.hero__media { margin: 0; overflow: hidden; transform: rotate(1.5deg); }
-.hero__media img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.hero__inner > * { min-width: 0; }   /* senza, la lavagna (larga 1000px "veri") allargherebbe la pagina */
 
 @media (max-width: 860px) {
   .hero__inner { grid-template-columns: 1fr; padding-block: var(--space-l); }
-  .hero__media { transform: none; }
+}
+
+/* Lavagna "Disegna il tuo sole" (codice in js/lavagna.js).
+   NB: la lavagna NON è ruotata come gli adesivi, altrimenti il
+   tratto non cadrebbe esattamente sotto il dito. */
+.lavagna {
+  display: grid; gap: var(--space-s);
+  padding: var(--space-m);
+  background: var(--c-paper);
+  border: var(--border);
+  box-shadow: var(--shadow-lg);
+}
+.lavagna .sticker { justify-self: start; margin-bottom: 0; }
+.lavagna__titolo { font-size: clamp(2.2rem, 4vw, 2.8rem); margin: 0; }
+.lavagna__aiuto { margin: 0; color: var(--c-muted); font-size: 1rem; }
+
+/* Riga degli strumenti */
+.lavagna__barra { display: flex; flex-wrap: wrap; gap: .5rem; }
+.lavagna__strumento {
+  display: inline-flex; align-items: center; gap: .4rem;
+  min-height: 44px;                      /* misura minima comoda per il dito */
+  padding: .4rem .75rem;
+  font: inherit; font-size: .8rem; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--c-ink); background: var(--c-paper);
+  border: var(--border); box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s;
+}
+.lavagna__strumento svg { width: 20px; height: 20px; flex-shrink: 0; }
+/* Strumento scelto: giallo e "schiacciato" */
+.lavagna__strumento[aria-pressed="true"] { background: var(--AC-giallo); transform: translate(3px, 3px); box-shadow: none; }
+.lavagna__strumento--annulla { margin-left: auto; }
+
+/* Tavolozza: tutti i colori su una riga, ogni quadratino prende il colore da --colore */
+.lavagna__colori { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: .4rem; }
+.lavagna__colore {
+  width: 100%; aspect-ratio: 1 / 1; max-height: 44px; padding: 0;
+  background: var(--colore);
+  border: var(--border); box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s;
+}
+.lavagna__colore[aria-pressed="true"] { transform: translate(3px, 3px); box-shadow: none; outline: 3px solid var(--c-ink); outline-offset: 2px; }
+
+/* Spessore del pennello */
+.lavagna__spessore { display: flex; align-items: center; gap: var(--space-s); }
+.lavagna__spessore label { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+.lavagna__spessore input { flex: 1; min-width: 0; accent-color: var(--c-ink); }
+.lavagna__spessore output { min-width: 2ch; font-variant-numeric: tabular-nums; }
+
+/* Il foglio da disegno */
+.lavagna__tela {
+  display: block; width: 100%; height: auto; aspect-ratio: 1 / 1;
+  background: #ffffff;
+  border: var(--border);
+  touch-action: none;                    /* sul telefono il dito disegna invece di scorrere la pagina */
+  cursor: crosshair;
+}
+
+.lavagna__azioni { display: flex; flex-wrap: wrap; gap: .5rem; }
+.lavagna__azioni .btn--primary { margin-left: auto; }
+
+@media (max-width: 480px) {
+  .lavagna { padding: var(--space-s); }
+  .lavagna__strumento span { display: none; }   /* sul telefono piccolo restano solo le icone */
 }
 
 /* Nastro scorrevole */
@@ -338,9 +401,21 @@ height: 40px;
   font-family: var(--font-primario); font-size: 1.1rem; text-transform: uppercase; letter-spacing: .04em;
   padding-block: .8rem;
 }
-.ribbon__track { display: flex; width: max-content; animation: scorri 30s linear infinite; }
+/* Come funziona: js/main.js (punto 5) ripete le parole finché il gruppo
+   è più largo dello schermo, poi lo duplica. Il nastro entra da destra
+   (nastro-entra) e poi gira all'infinito spostandosi di metà (nastro-gira):
+   le due metà sono identiche, quindi il salto non si vede.
+   Le durate le calcola il JavaScript, per avere sempre la stessa velocità. */
+.ribbon__track { display: flex; width: max-content; }
+.ribbon__gruppo { display: flex; flex-shrink: 0; }
 .ribbon__track span { padding-right: 1rem; white-space: nowrap; }
-@keyframes scorri { to { transform: translateX(-50%); } }
+.ribbon.is-pronto .ribbon__track {
+  animation:
+    nastro-entra var(--durata-entrata, 10s) linear,
+    nastro-gira var(--durata-giro, 30s) linear var(--durata-entrata, 10s) infinite;
+}
+@keyframes nastro-entra { from { transform: translateX(var(--larghezza-nastro, 100vw)); } to { transform: translateX(0); } }
+@keyframes nastro-gira  { to { transform: translateX(-50%); } }
 
 /* Card */
 .cards { display: grid; gap: var(--gutter); grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
@@ -628,6 +703,11 @@ height: 40px;
 .lettura__copertina { max-width: 60rem; margin-block: var(--space-l); }
 .lettura__copertina img { width: 100%; border: var(--border); box-shadow: var(--shadow); }
 .lettura__head + .lettura__testo { margin-top: var(--space-l); }
+
+/* Tasto "← Indietro" sopra l'articolo, allineato alla colonna di testo
+   (42rem = la stessa misura di --colonna) */
+.lettura__indietro { max-width: 42rem; margin: var(--space-m) auto 0; }
+.lettura__indietro + .lettura { padding-top: var(--space-m); }
 
 /* Testo */
 .lettura__testo {
