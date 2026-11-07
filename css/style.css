@@ -30,6 +30,7 @@
   --AC-azzurro:      #9fb6f0;
   --AC-rosa:         #e49bbc;
   --AC-sfondoBianco: #f9f2e2;
+  --AC-boxIconeBianchi:  #fef1e4;
 
   /* Colori di servizio */
   --c-ink:   #111111;               /* nero "inchiostro": testi, bordi, ombre */
@@ -100,6 +101,23 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+@font-face {
+  font-family: "Material Symbols Rounded";
+  src: url("../fonts/material-symbols-rounded.woff2") format("woff2");
+  font-display: swap;
+}
+
+.material-symbols-rounded {  /* classe da aggiungere a un <span> per mostrare un'icona */
+  font-family: "Material Symbols Rounded";
+  font-weight: 600;
+  font-style: normal;
+  font-size: 28px;
+  line-height: 1;
+  display: inline-block;
+  -webkit-font-feature-settings: "liga";
+  font-feature-settings: "liga";
 }
 
 
@@ -185,14 +203,14 @@ a:hover { background: var(--AC-giallo); }
 .sticker--verde { background: var(--AC-verde); }
 
 /* Evidenziatore dietro una parola */
-.highlight { background: var(--AC-giallo); padding-inline: .2em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.highlight { background: var(--AC-giallo); padding-inline: .1em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 
 /* Quadratino colorato con icona */
 .icon {
   display: grid; place-items: center;
   width: 56px; height: 56px; flex-shrink: 0;
   font-size: 1.6rem;
-  background: var(--c-paper);
+  background: var(--AC-sfondoBianco);
   border: var(--border);
   margin-bottom: var(--space-s);
 }
@@ -202,6 +220,12 @@ a:hover { background: var(--AC-giallo); }
 .icon--verde     { background: var(--AC-verde); }
 .icon--azzurro   { background: var(--AC-azzurro); }
 .icon--rosa      { background: var(--AC-rosa); }
+
+
+.loghiPersonali{
+width: 40px;
+height: 40px;
+}
 
 /* Pulsanti */
 .btn {
@@ -310,8 +334,8 @@ a:hover { background: var(--AC-giallo); }
 /* Nastro scorrevole */
 .ribbon {
   overflow: hidden;
-  background: var(--c-ink); color: var(--AC-giallo);
-  font-family: var(--font-secondario); font-size: 1.1rem; text-transform: uppercase; letter-spacing: .04em;
+  background: var(--c-ink); color: var(--AC-sfondoBianco);
+  font-family: var(--font-primario); font-size: 1.1rem; text-transform: uppercase; letter-spacing: .04em;
   padding-block: .8rem;
 }
 .ribbon__track { display: flex; width: max-content; animation: scorri 30s linear infinite; }
